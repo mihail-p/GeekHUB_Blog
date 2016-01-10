@@ -13,10 +13,7 @@ use AppBundle\Entity\Posts;
 use AppBundle\Form\PostAdd;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\HttpFoundation\Request;
 
 class PostController extends Controller
@@ -53,11 +50,11 @@ class PostController extends Controller
     public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $listObj = $em->getRepository('AppBundle:Authors')
-            ->getAllAuthors();
-        $nav = 3;
+        $listObj = $em->getRepository('AppBundle:Posts')
+            ->getPosts();
+        $nav = 5;
 
-        return $this->render(':blog:listAuthor.html.twig', [
+        return $this->render(':blog:listPosts.html.twig', [
             'listObj' => $listObj, 'nav' => $nav
         ]);
     }

@@ -25,7 +25,7 @@ class Posts
     /**
      *
      * @Assert\NotBlank()
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Authors")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Authors")
      */
     private $author;
 
