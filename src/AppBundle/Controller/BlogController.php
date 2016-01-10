@@ -14,8 +14,8 @@ class BlogController extends Controller
     public function indexAction(Request $request)
     {
         // replace this example code with whatever you need
-
-        return $this->render('blog/index.html.twig', ['base_dir' => ''
+        $nav = 1;
+        return $this->render('blog/index.html.twig', ['nav' => $nav
             ]);
     }
 }

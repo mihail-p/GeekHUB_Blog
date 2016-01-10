@@ -1,5 +1,7 @@
 {% extends 'blog.base.html.twig' %}
 {% block blog_Post %}
-    <h3>Author added</h3>
+    <h3>{% if nav == 3 %}author
+        {% elseif nav == 4 %}post
+        {% endif %} added</h3>
     <hr>
 {% endblock %}

@@ -1,6 +1,9 @@
 {% extends 'blog.base.html.twig' %}
 {% block blog_Post %}
-    <p>Add author:</p>
+    <p>Add {% if nav == 3 %}author
+        {% elseif nav == 4 %}post
+        {% endif %}
+        :</p>
     <hr>
     {{ form_start(form) }}
     {{ form_widget(form) }}

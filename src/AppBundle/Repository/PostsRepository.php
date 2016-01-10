@@ -8,6 +8,7 @@ class PostsRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->createQueryBuilder('p')
             ->select('p.author', 'p.title', 'p.dateTime', 'p.post')
-            ->getQuery();
+            ->getQuery()
+            ->getResult();
     }
 }

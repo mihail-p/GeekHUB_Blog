@@ -31,10 +31,10 @@
         <div class="blog-masthead">
             <div class="container">
                 <nav class="blog-nav">
-                    <a class="blog-nav-item active" href="{{ path('indexBlog') }}">Home</a>
-                    <a class="blog-nav-item" href="{{ path('authorAdd') }}">Author add</a>
-                    <a class="blog-nav-item" href="#">Press</a>
-                    <a class="blog-nav-item" href="#">New hires</a>
+                    <a class="blog-nav-item {% if nav == 1 %}active{% endif %}" href="{{ path('indexBlog') }}">Home</a>
+                    <a class="blog-nav-item {% if nav == 2 %}active{% endif %}" href="{{ path('authorAdd') }}">Author add</a>
+                    <a class="blog-nav-item {% if nav == 3 %}active{% endif %}" href="{{ path('authorList') }}">Author List</a>
+                    <a class="blog-nav-item {% if nav == 4 %}active{% endif %}" href="{{ path('postAdd') }}">New post</a>
                     <a class="blog-nav-item" href="#">About</a>
                 </nav>
             </div>
@@ -43,7 +43,7 @@
     <div class="container">
         {% block blogHeader %}
             <div class="blog-header">
-                <h1 class="blog-title">The Bootstrap Now My BLOG</h1>
+                <h1 class="blog-title">Blog name</h1>
                 <p class="lead blog-description">example template of creating a blog with Bootstrap.</p>
             </div>
         {% endblock blogHeader %}

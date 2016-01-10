@@ -9,6 +9,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Authors;
+use AppBundle\Entity\Posts;
+use AppBundle\Form\PostAdd;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -17,28 +19,25 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\HttpFoundation\Request;
 
-class AuthorController extends Controller
+class PostController extends Controller
 {
     /**
-     * @Route("/authorAdd", name="authorAdd")
+     * @Route("/postAdd", name="postAdd")
      */
     public function addAction(Request $request)
     {
-        $author = new Authors();
-        $author->setAuthor('Author1');
-        $author->setDateTime(new \DateTime());
+        $post = new Posts();
+        $post->setTitle('Title_1');
+        $post->setDateTime(new \DateTime());
 
-        $form = $this->createFormBuilder($author)
-            ->add('Author', TextType::class)
-            ->add('Passw', PasswordType::class)
-            ->add('DateTime', DateTimeType::class)
-            ->add('Add', SubmitType::class)
-            ->getForm();
+        $form = $this->createForm(new PostAdd(), $post);
+        $form->add('add post', SubmitType::class);
+
         $form->handleRequest($request);
-        $nav = 2;
+        $nav = 4;
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($author);
+            $em->persist($post);
             $em->flush();
 
             return $this->render(':blog:addAuthorOk.html.twig', ['nav' => $nav]);
@@ -49,7 +48,7 @@ class AuthorController extends Controller
         ]);
     }
     /**
-     * @Route("/authorList", name="authorList")
+     * @Route("/postList", name="postList")
      */
     public function listAction()
     {

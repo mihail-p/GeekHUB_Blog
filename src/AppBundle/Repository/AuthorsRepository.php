@@ -10,4 +10,11 @@ namespace AppBundle\Repository;
  */
 class AuthorsRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getAllAuthors()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a.author', 'a.dateTime', 'a.passw')
+            ->getQuery()
+            ->getResult();
+    }
 }
