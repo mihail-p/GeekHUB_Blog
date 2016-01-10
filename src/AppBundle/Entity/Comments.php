@@ -3,15 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Posts
+ * Comments
  *
- * @ORM\Table(name="posts")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\PostsRepository")
+ * @ORM\Table(name="comments")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CommentsRepository")
  */
-class Posts
+class Comments
 {
     /**
      * @var int
@@ -23,21 +22,6 @@ class Posts
     private $id;
 
     /**
-     *
-     * @Assert\NotBlank()
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Authors")
-     */
-    private $author;
-
-    /**
-     * @var string
-     *
-     * @Assert\NotBlank()
-     * @ORM\Column(name="Title", type="string", length=255)
-     */
-    private $title;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="DateTime", type="datetime")
@@ -47,10 +31,20 @@ class Posts
     /**
      * @var string
      *
-     * @Assert\NotBlank()
-     * @ORM\Column(name="Post", type="text")
+     * @ORM\Column(name="Comment", type="string", length=255)
      */
-    private $post;
+    private $comment;
+
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Authors")
+     */
+    protected $author;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Posts")
+     */
+    protected $post;
+
 
     /**
      * Get id
@@ -63,35 +57,11 @@ class Posts
     }
 
     /**
-     * Set title
-     *
-     * @param string $title
-     *
-     * @return Posts
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
      * Set dateTime
      *
      * @param \DateTime $dateTime
      *
-     * @return Posts
+     * @return Comments
      */
     public function setDateTime($dateTime)
     {
@@ -111,27 +81,27 @@ class Posts
     }
 
     /**
-     * Set post
+     * Set comment
      *
-     * @param string $post
+     * @param string $comment
      *
-     * @return Posts
+     * @return Comments
      */
-    public function setPost($post)
+    public function setComment($comment)
     {
-        $this->post = $post;
+        $this->comment = $comment;
 
         return $this;
     }
 
     /**
-     * Get post
+     * Get comment
      *
      * @return string
      */
-    public function getPost()
+    public function getComment()
     {
-        return $this->post;
+        return $this->comment;
     }
 
     /**
@@ -139,7 +109,7 @@ class Posts
      *
      * @param \AppBundle\Entity\Authors $author
      *
-     * @return Posts
+     * @return Comments
      */
     public function setAuthor(\AppBundle\Entity\Authors $author = null)
     {
@@ -156,5 +126,29 @@ class Posts
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    /**
+     * Set post
+     *
+     * @param \AppBundle\Entity\Posts $post
+     *
+     * @return Comments
+     */
+    public function setPost(\AppBundle\Entity\Posts $post = null)
+    {
+        $this->post = $post;
+
+        return $this;
+    }
+
+    /**
+     * Get post
+     *
+     * @return \AppBundle\Entity\Posts
+     */
+    public function getPost()
+    {
+        return $this->post;
     }
 }

@@ -1,0 +1,10 @@
+{% extends 'blog.base.html.twig' %}
+{% block blog_Post %}
+    <p>Add author:</p>
+    <hr>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    {#{{ dump(form) }}#}
+{% endblock %}
