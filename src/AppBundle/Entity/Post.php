@@ -52,7 +52,7 @@ class Post
      */
     private $post;
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Tag", mappedBy="posts")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Tag", inversedBy="posts")
      */
     private $tags;
 

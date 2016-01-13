@@ -31,7 +31,7 @@ class Tag
     private $tag;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Post", inversedBy="tags")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Post", mappedBy="tags")
      */
      protected $posts;
 

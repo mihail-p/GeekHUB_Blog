@@ -37,7 +37,7 @@ class PostController extends Controller
             $em->persist($post);
             $em->flush();
 
-            return $this->render(':blog:addAuthorOk.html.twig', ['nav' => $nav]);
+            /* return $this->render(':blog:addAuthorOk.html.twig', ['nav' => $nav]); */
         }
 
         return $this->render(':blog:addAuthor.html.twig', [
