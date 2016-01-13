@@ -8,9 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
  * Comments
  *
  * @ORM\Table(name="comments")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CommentsRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CommentRepository")
  */
-class Comments
+class Comment
 {
     /**
      * @var int
@@ -36,12 +36,12 @@ class Comments
     private $comment;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Authors")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Author")
      */
     protected $author;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Posts")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Post")
      */
     protected $post;
 
@@ -61,7 +61,7 @@ class Comments
      *
      * @param \DateTime $dateTime
      *
-     * @return Comments
+     * @return Comment
      */
     public function setDateTime($dateTime)
     {
@@ -85,7 +85,7 @@ class Comments
      *
      * @param string $comment
      *
-     * @return Comments
+     * @return Comment
      */
     public function setComment($comment)
     {
@@ -107,11 +107,11 @@ class Comments
     /**
      * Set author
      *
-     * @param \AppBundle\Entity\Authors $author
+     * @param \AppBundle\Entity\Author $author
      *
-     * @return Comments
+     * @return Comment
      */
-    public function setAuthor(\AppBundle\Entity\Authors $author = null)
+    public function setAuthor(\AppBundle\Entity\Author $author = null)
     {
         $this->author = $author;
 
@@ -121,7 +121,7 @@ class Comments
     /**
      * Get author
      *
-     * @return \AppBundle\Entity\Authors
+     * @return \AppBundle\Entity\Author
      */
     public function getAuthor()
     {
@@ -131,11 +131,11 @@ class Comments
     /**
      * Set post
      *
-     * @param \AppBundle\Entity\Posts $post
+     * @param \AppBundle\Entity\Post $post
      *
-     * @return Comments
+     * @return Comment
      */
-    public function setPost(\AppBundle\Entity\Posts $post = null)
+    public function setPost(\AppBundle\Entity\Post $post = null)
     {
         $this->post = $post;
 
@@ -145,7 +145,7 @@ class Comments
     /**
      * Get post
      *
-     * @return \AppBundle\Entity\Posts
+     * @return \AppBundle\Entity\Post
      */
     public function getPost()
     {

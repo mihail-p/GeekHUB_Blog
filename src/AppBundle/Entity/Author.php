@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Authors
+ * Author
  *
- * @ORM\Table(name="authors")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\AuthorsRepository")
+ * @ORM\Table(name="author")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\AuthorRepository")
  */
-class Authors
+class Author
 {
     /**
      * @var int
@@ -58,7 +58,7 @@ class Authors
      *
      * @param string $author
      *
-     * @return Authors
+     * @return Author
      */
     public function setAuthor($author)
     {
@@ -82,7 +82,7 @@ class Authors
      *
      * @param string $passw
      *
-     * @return Authors
+     * @return Author
      */
     public function setPassw($passw)
     {
@@ -106,7 +106,7 @@ class Authors
      *
      * @param \DateTime $dateTime
      *
-     * @return Authors
+     * @return Author
      */
     public function setDateTime(\DateTime $dateTime = null)
     {
@@ -125,4 +125,3 @@ class Authors
         return $this->dateTime;
     }
 }
-

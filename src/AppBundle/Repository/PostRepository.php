@@ -2,7 +2,7 @@
 
 namespace AppBundle\Repository;
 
-class PostsRepository extends \Doctrine\ORM\EntityRepository
+class PostRepository extends \Doctrine\ORM\EntityRepository
 {
     public function getPosts()
     {

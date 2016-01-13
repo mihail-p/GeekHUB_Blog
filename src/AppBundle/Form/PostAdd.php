@@ -15,7 +15,7 @@ class PostAdd extends AbstractType
     {
         $builder
             ->add('author', EntityType::class, [
-                'class' => 'AppBundle:Authors',
+                'class' => 'AppBundle:Author',
                 'choice_label' => 'author'])
             ->add('title', TextType::class)
             ->add('post', TextareaType::class,[
@@ -24,6 +24,6 @@ class PostAdd extends AbstractType
     }
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'AppBundle\Entity\Posts']);
+        $resolver->setDefaults(['data_class' => 'AppBundle\Entity\Post']);
     }
 }

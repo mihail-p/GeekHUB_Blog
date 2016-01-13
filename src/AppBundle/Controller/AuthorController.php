@@ -8,7 +8,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Authors;
+use AppBundle\Entity\Author;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -24,7 +24,7 @@ class AuthorController extends Controller
      */
     public function addAction(Request $request)
     {
-        $author = new Authors();
+        $author = new Author();
         $author->setAuthor('Author1');
         $author->setDateTime(new \DateTime());
 
@@ -54,7 +54,7 @@ class AuthorController extends Controller
     public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $listObj = $em->getRepository('AppBundle:Authors')
+        $listObj = $em->getRepository('AppBundle:Author')
             ->getAllAuthors();
         $nav = 3;
 

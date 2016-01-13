@@ -8,10 +8,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Posts
  *
- * @ORM\Table(name="posts")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\PostsRepository")
+ * @ORM\Table(name="post")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PostRepository")
  */
-class Posts
+class Post
 {
     /**
      * @var int
@@ -25,7 +25,7 @@ class Posts
     /**
      *
      * @Assert\NotBlank()
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Authors")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Author")
      */
     private $author;
 
@@ -51,6 +51,10 @@ class Posts
      * @ORM\Column(name="Post", type="text")
      */
     private $post;
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Tag", mappedBy="posts")
+     */
+    private $tags;
 
     /**
      * Get id
@@ -67,7 +71,7 @@ class Posts
      *
      * @param string $title
      *
-     * @return Posts
+     * @return Post
      */
     public function setTitle($title)
     {
@@ -91,7 +95,7 @@ class Posts
      *
      * @param \DateTime $dateTime
      *
-     * @return Posts
+     * @return Post
      */
     public function setDateTime($dateTime)
     {
@@ -115,7 +119,7 @@ class Posts
      *
      * @param string $post
      *
-     * @return Posts
+     * @return Post
      */
     public function setPost($post)
     {
@@ -137,11 +141,11 @@ class Posts
     /**
      * Set author
      *
-     * @param \AppBundle\Entity\Authors $author
+     * @param \AppBundle\Entity\Author $author
      *
-     * @return Posts
+     * @return Post
      */
-    public function setAuthor(\AppBundle\Entity\Authors $author = null)
+    public function setAuthor(\AppBundle\Entity\Author $author = null)
     {
         $this->author = $author;
 
@@ -151,10 +155,51 @@ class Posts
     /**
      * Get author
      *
-     * @return \AppBundle\Entity\Authors
+     * @return \AppBundle\Entity\Author
      */
     public function getAuthor()
     {
         return $this->author;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add tag
+     *
+     * @param \AppBundle\Entity\Tag $tag
+     *
+     * @return Post
+     */
+    public function addTag(\AppBundle\Entity\Tag $tag)
+    {
+        $this->tags[] = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Remove tag
+     *
+     * @param \AppBundle\Entity\Tag $tag
+     */
+    public function removeTag(\AppBundle\Entity\Tag $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 }

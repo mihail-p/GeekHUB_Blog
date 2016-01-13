@@ -8,10 +8,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Tags
  *
- * @ORM\Table(name="tags")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\TagsRepository")
+ * @ORM\Table(name="tag")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TagRepository")
  */
-class Tags
+class Tag
 {
     /**
      * @var int
@@ -31,7 +31,7 @@ class Tags
     private $tag;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Posts")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Post", inversedBy="tags")
      */
      protected $posts;
 
@@ -51,7 +51,7 @@ class Tags
      *
      * @param string $tag
      *
-     * @return Tags
+     * @return Tag
      */
     public function setTag($tag)
     {
@@ -69,25 +69,42 @@ class Tags
     {
         return $this->tag;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
-     * Set posts
+     * Add post
      *
-     * @param \AppBundle\Entity\Posts $posts
+     * @param \AppBundle\Entity\Post $post
      *
-     * @return Tags
+     * @return Tag
      */
-    public function setPosts(\AppBundle\Entity\Posts $posts = null)
+    public function addPost(\AppBundle\Entity\Post $post)
     {
-        $this->posts = $posts;
+        $this->posts[] = $post;
 
         return $this;
     }
 
     /**
+     * Remove post
+     *
+     * @param \AppBundle\Entity\Post $post
+     */
+    public function removePost(\AppBundle\Entity\Post $post)
+    {
+        $this->posts->removeElement($post);
+    }
+
+    /**
      * Get posts
      *
-     * @return \AppBundle\Entity\Posts
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPosts()
     {

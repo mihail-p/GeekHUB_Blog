@@ -8,8 +8,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Authors;
-use AppBundle\Entity\Posts;
+use AppBundle\Entity\Post;
 use AppBundle\Form\PostAdd;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -23,7 +22,7 @@ class PostController extends Controller
      */
     public function addAction(Request $request)
     {
-        $post = new Posts();
+        $post = new Post();
         $post->setTitle('Title_1');
         $post->setDateTime(new \DateTime());
 
@@ -50,7 +49,7 @@ class PostController extends Controller
     public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $listObj = $em->getRepository('AppBundle:Posts')
+        $listObj = $em->getRepository('AppBundle:Post')
             ->getPosts();
         $nav = 5;
 
