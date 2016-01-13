@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PostAdd extends AbstractType
+class PostAddType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -20,6 +20,12 @@ class PostAdd extends AbstractType
             ->add('title', TextType::class)
             ->add('post', TextareaType::class,[
                 'attr' => array('cols' => '68', 'rows' => '10')
+            ])
+            ->add('tags', EntityType::class, [
+              'class' => 'AppBundle\Entity\Tag',
+              'choice_label' => 'tag',
+              'multiple' => 'true',
+
             ]);
     }
     public function configureOptions(OptionsResolver $resolver)

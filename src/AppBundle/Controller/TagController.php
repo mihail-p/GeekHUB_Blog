@@ -9,32 +9,33 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Post;
+use AppBundle\Entity\Tag;
 use AppBundle\Form\PostAdd;
 use AppBundle\Form\PostAddType;
+use AppBundle\Form\TagType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
-class PostController extends Controller
+class TagController extends Controller
 {
     /**
-     * @Route("/postAdd", name="postAdd")
+     * @Route("/tagAdd", name="tagAdd")
      */
     public function addAction(Request $request)
     {
-        $post = new Post();
-        $post->setTitle('Title_1');
-        $post->setDateTime(new \DateTime());
+        $tag = new Tag();
+        $tag->setTag('Tag_1');
 
-        $form = $this->createForm(new PostAddType(), $post);
-        $form->add('add post', SubmitType::class);
+        $form = $this->createForm(new TagType(), $tag);
+        $form->add('add tag', SubmitType::class);
 
         $form->handleRequest($request);
-        $nav = 4;
+        $nav = 6;
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($post);
+            $em->persist($tag);
             $em->flush();
 
             return $this->render(':blog:addAuthorOk.html.twig', ['nav' => $nav]);
@@ -45,16 +46,16 @@ class PostController extends Controller
         ]);
     }
     /**
-     * @Route("/postList", name="postList")
+     * @Route("/tagList", name="tagList")
      */
     public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $listObj = $em->getRepository('AppBundle:Post')
-            ->getPosts();
-        $nav = 5;
+        $listObj = $em->getRepository('AppBundle:Tag')
+            ->findAll();
+        $nav = 7;
 
-        return $this->render(':blog:listPosts.html.twig', [
+        return $this->render(':blog:listTags.html.twig', [
             'listObj' => $listObj, 'nav' => $nav
         ]);
     }

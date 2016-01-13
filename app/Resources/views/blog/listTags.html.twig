@@ -1,0 +1,14 @@
+{% extends 'blog.base.html.twig' %}
+{% block blog_Post %}
+    <h3>List Tags:</h3>
+    <hr>
+    <table class="table">
+        <thead><tr><th>#</th><th>tag name</th></tr></thead>
+    {% for tag in listObj %}
+        <tr>
+            <td>{{ loop.index }}. </td>
+            <td>{{ tag.tag }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
