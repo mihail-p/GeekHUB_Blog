@@ -1,16 +1,15 @@
 {% extends 'blog.base.html.twig' %}
 {% block posts %}
-    {{ dump(listObj) }}
-
+    {#{{ dump(listObj) }}#}
     {% for post in listObj %}
         {#DUMP POST:
         {{ dump(post) }} #}
         <div class="blog-post">
             <h2 class="blog-post-title">{{ post.title }}</h2>
             <p class="blog-post-meta">{{ post.dateTime|date }} by <a href="#">{{ post.author.author }}</a></p>
-                <span style="color: #5cb85c">
+
                     {% for tag_name in post.tags %}
-                        {{ tag_name.tag }}
+                        <a class="label label-default ">{{ tag_name.tag }}</a>
                     {% endfor %}
                 </span>
             <p>{{ post.post }}</p>

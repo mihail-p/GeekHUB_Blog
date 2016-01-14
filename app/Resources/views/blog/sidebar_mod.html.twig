@@ -1,0 +1,23 @@
+{% if listObj.4.title is defined %}
+    <div class="sidebar-module sidebar-module-inset">
+        <div id="myCanvasContainer">
+            <canvas width="230" height="230" id="myCanvas">
+                <p>Anything in here will be replaced on browsers that support the canvas element</p>
+                <ul>
+                    {% for post in listObj %}
+                        {% for tag_name in post.tags %}
+                            <li><a href="/name">{{ tag_name.tag }}</a></li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </canvas>
+        </div>
+        <div class="btn-group btn-group-sm" role="group" aria-label="...">
+            {% for post in listObj %}
+                {% for tag_name in post.tags %}
+                    <a type="button" class="btn btn-default" href="#{{ loop.index0 }}">{{ tag_name.tag }}</a>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
