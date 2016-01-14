@@ -41,7 +41,7 @@ class AuthorController extends Controller
             $em->persist($author);
             $em->flush();
 
-            return $this->render(':blog:addAuthorOk.html.twig', ['nav' => $nav]);
+            return $this->render(':blog:addItemOk.html.twig', ['nav' => $nav]);
         }
 
         return $this->render(':blog:addAuthor.html.twig', [

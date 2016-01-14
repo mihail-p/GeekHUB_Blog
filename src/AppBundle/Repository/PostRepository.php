@@ -7,9 +7,9 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     public function getPosts()
     {
         return $this->createQueryBuilder('p')
-            ->select('au.author' ,'p.title', 'p.dateTime', 'p.post', 'pt.tag')
+            ->select('p', 'pt', 'au')
             ->join('p.author', 'au')
-            ->join('p.tags', 'pt')
+            ->leftJoin('p.tags', 'pt')
             ->getQuery()
             ->getResult();
     }

@@ -9,7 +9,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Post;
-use AppBundle\Form\PostAdd;
 use AppBundle\Form\PostAddType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -37,7 +36,7 @@ class PostController extends Controller
             $em->persist($post);
             $em->flush();
 
-            /* return $this->render(':blog:addAuthorOk.html.twig', ['nav' => $nav]); */
+            return $this->render(':blog:addItemOk.html.twig', ['nav' => $nav]);
         }
 
         return $this->render(':blog:addAuthor.html.twig', [
