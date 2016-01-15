@@ -27,29 +27,26 @@
 </head>
 <body>
 {% block body %}
-    {% block masterHead %}
-        <div class="blog-masthead">
-            <div class="container">
-                <nav class="blog-nav">
+    <div class="blog-masthead">
+        <div class="container">
+            <nav class="blog-nav">
+                {% block nav %}
                     <a class="blog-nav-item {% if nav == 1 %}active{% endif %}" href="{{ path('indexBlog') }}">Home</a>
-                    <a class="blog-nav-item {% if nav == 2 %}active{% endif %}" href="{{ path('authorAdd') }}">Author
-                        add</a>
+                    <a class="blog-nav-item {% if nav == 8 %}active{% endif %}" href="{{ path('adminBlog') }}">Admin</a>
                     <a class="blog-nav-item {% if nav == 3 %}active{% endif %}" href="{{ path('authorList') }}">Author
                         List</a>
-                    <a class="blog-nav-item {% if nav == 4 %}active{% endif %}" href="{{ path('postAdd') }}">New
-                        post</a>
                     <a class="blog-nav-item {% if nav == 5 %}active{% endif %}" href="{{ path('postList') }}">Posts</a>
-                    <a class="blog-nav-item {% if nav == 6 %}active{% endif %}" href="{{ path('tagAdd') }}">New tag</a>
-                    <a class="blog-nav-item {% if nav == 7 %}active{% endif %}" href="{{ path('tagList') }}">Tags</a>
+
                     <a class="blog-nav-item" href="#">About</a>
-                </nav>
-            </div>
+                {% endblock nav %}
+            </nav>
         </div>
-    {% endblock masterHead %}
+    </div>
     <div class="container">
         {% block blogHeader %}
             <div class="blog-header">
                 <h1 class="blog-title">Blog name</h1>
+
                 <p class="lead blog-description">example template of creating a blog with Bootstrap.</p>
             </div>
         {% endblock blogHeader %}
@@ -73,6 +70,7 @@
                         {% include ':blog:sidebar_mod.html.twig' %}
                         <div class="sidebar-module sidebar-module-inset">
                             <h4>About</h4>
+
                             <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus
                                 sit amet
                                 fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
@@ -107,6 +105,7 @@
             <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a
                         href="https://twitter.com/mdo">@mdo</a>.
             </p>
+
             <p>
                 <a href="#">Back to top</a>
             </p>
@@ -123,7 +122,7 @@
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/jquery.tagcanvas.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/initCanJquery.js') }}" type="text/javascript"></script>
-                                                                                     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="{{ asset('js/ie10-viewport-bug-workaround.js') }}"></script>
 {% endblock %}
 </body>

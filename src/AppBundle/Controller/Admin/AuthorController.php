@@ -6,7 +6,7 @@
  * Time: 10:41 AM
  */
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Author;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -44,7 +44,7 @@ class AuthorController extends Controller
             return $this->render(':blog:addItemOk.html.twig', ['nav' => $nav]);
         }
 
-        return $this->render(':blog:addAuthor.html.twig', [
+        return $this->render(':blog/Admin:addItem.html.twig', [
             'form' => $form->createView(), 'nav' => $nav
         ]);
     }
@@ -58,7 +58,7 @@ class AuthorController extends Controller
             ->getAllAuthors();
         $nav = 3;
 
-        return $this->render(':blog:listAuthor.html.twig', [
+        return $this->render(':blog/Admin:listAuthor.html.twig', [
             'listObj' => $listObj, 'nav' => $nav
         ]);
     }

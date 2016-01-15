@@ -1,0 +1,26 @@
+{% extends 'blog/Admin/index.html.twig' %}
+{% block blogHeader %}
+    <div class="blog-header">
+        <p class="lead blog-description">admin panel<br>Posts:</p>
+    </div>
+{% endblock %}
+
+{% block posts %}
+    {#{{ dump(listObj) }}#}
+    <div class="blog-post">
+    <table class="table">
+    <tr><th>title</th><th>dateTime</th><th>author</th><th>tags</th></tr>
+    {% for post in listObj %}
+        {#DUMP POST:
+        {{ dump(post) }} #}
+            <tr><td>{{ post.title }}</td><td>{{ post.dateTime|date }}</td><td>{{ post.author.author }}</td>
+                <td>
+                    {% for tag_name in post.tags %}
+                        {{ tag_name.tag }}
+                    {% endfor %}
+                </td>
+            </tr>
+    {% endfor %}
+    </table>
+    </div>
+{% endblock %}

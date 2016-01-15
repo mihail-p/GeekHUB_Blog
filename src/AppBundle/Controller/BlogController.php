@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 class BlogController extends Controller
 {
     /**
-     * @Route("/blog", name="indexBlog")
+     * @Route("/", name="indexBlog")
      */
     public function indexAction(Request $request)
     {
@@ -17,5 +17,29 @@ class BlogController extends Controller
         $nav = 1;
         return $this->render('blog/index.html.twig', ['nav' => $nav
             ]);
+    }
+    /**
+     * @Route("/admin", name="adminBlog")
+     */
+    public function listAdminAction(Request $request)
+    {
+        // replace this example code with whatever you need
+        $nav = 8;
+        return $this->render(':blog/Admin:index.html.twig', ['nav' => $nav
+            ]);
+    }
+    /**
+     * @Route("/list", name="postList")
+     */
+    public function listAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $listObj = $em->getRepository('AppBundle:Post')
+            ->getPosts();
+        $nav = 5;
+
+        return $this->render(':blog:listPosts.html.twig', [
+            'listObj' => $listObj, 'nav' => $nav
+        ]);
     }
 }

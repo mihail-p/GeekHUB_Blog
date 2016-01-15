@@ -6,7 +6,7 @@
  * Time: 10:41 AM
  */
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Post;
 use AppBundle\Entity\Tag;
@@ -18,10 +18,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class TagController
+ * @package AppBundle\Controller\Admin
+ * @Route("/admin/tag")
+ */
 class TagController extends Controller
 {
     /**
-     * @Route("/tagAdd", name="tagAdd")
+     * @Route("/add", name="tagAdd")
      */
     public function addAction(Request $request)
     {
@@ -41,12 +46,12 @@ class TagController extends Controller
             return $this->render(':blog:addItemOk.html.twig', ['nav' => $nav]);
         }
 
-        return $this->render(':blog:addAuthor.html.twig', [
+        return $this->render(':blog/Admin:addItem.html.twig', [
             'form' => $form->createView(), 'nav' => $nav
         ]);
     }
     /**
-     * @Route("/tagList", name="tagList")
+     * @Route("/list", name="tagList")
      */
     public function listAction()
     {
@@ -55,7 +60,7 @@ class TagController extends Controller
             ->findAll();
         $nav = 7;
 
-        return $this->render(':blog:listTags.html.twig', [
+        return $this->render(':blog/Admin:listTags.html.twig', [
             'listObj' => $listObj, 'nav' => $nav
         ]);
     }

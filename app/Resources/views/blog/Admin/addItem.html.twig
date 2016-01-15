@@ -1,13 +1,13 @@
-{% extends 'blog.base.html.twig' %}
+{% extends ':blog/Admin:index.html.twig' %}
 {% block blog_Post %}
     <p>Add {% if nav == 3 %}author
         {% elseif nav == 4 %}post
-        {% elseif nav == 6 %}post
+        {% elseif nav == 6 %}tag
         {% endif %}
         :</p>
     <hr>
     {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
-    {{ dump(form) }}
+    {#{{ dump(form) }}#}
 {% endblock %}

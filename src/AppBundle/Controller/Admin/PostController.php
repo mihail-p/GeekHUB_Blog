@@ -6,7 +6,7 @@
  * Time: 10:41 AM
  */
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Post;
 use AppBundle\Form\PostAddType;
@@ -15,10 +15,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class PostController
+ * @Route("/admin/post")
+ */
+
 class PostController extends Controller
 {
     /**
-     * @Route("/postAdd", name="postAdd")
+     * @Route("/add", name="postAdd")
      */
     public function addAction(Request $request)
     {
@@ -39,21 +44,21 @@ class PostController extends Controller
             return $this->render(':blog:addItemOk.html.twig', ['nav' => $nav]);
         }
 
-        return $this->render(':blog:addAuthor.html.twig', [
+        return $this->render(':blog/Admin:addItem.html.twig', [
             'form' => $form->createView(), 'nav' => $nav
         ]);
     }
     /**
-     * @Route("/postList", name="postList")
+     * @Route("/list", name="admPostList")
      */
     public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
         $listObj = $em->getRepository('AppBundle:Post')
             ->getPosts();
-        $nav = 5;
+        $nav = 9;
 
-        return $this->render(':blog:listPosts.html.twig', [
+        return $this->render(':blog/Admin:admListPosts.html.twig', [
             'listObj' => $listObj, 'nav' => $nav
         ]);
     }
