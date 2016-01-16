@@ -62,5 +62,30 @@ class PostController extends Controller
             'listObj' => $listObj, 'nav' => $nav
         ]);
     }
+    /**
+     *@Route("/mod/{id}", name="admPostMod",
+     *     requirements={"id": "\d+"})
+     */
+    public function modAction($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $postObj = $em->getRepository('AppBundle:Post')->find($id);
+        $form = $this->createForm(PostAddType::class, $postObj);
+        $form->add('modify', SubmitType::class);
+        $nav = 10;
 
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+            /*$formString = $form->getData()->getTeam()->getCountry(); */
+
+            if ($form->isValid()) {
+                /*  $formData = $form->getData(); */
+                $em->flush();
+
+                return $this->render('blog/addItemOk.html.twig',['nav' => $nav]);
+            }
+        }
+        return $this->render(':blog/Admin:addItem.html.twig',
+            ['form' => $form->createView(),'nav' => $nav]);
+    }
 }

@@ -8,19 +8,34 @@
 {% block posts %}
     {#{{ dump(listObj) }}#}
     <div class="blog-post">
-    <table class="table">
-    <tr><th>title</th><th>dateTime</th><th>author</th><th>tags</th></tr>
-    {% for post in listObj %}
-        {#DUMP POST:
-        {{ dump(post) }} #}
-            <tr><td>{{ post.title }}</td><td>{{ post.dateTime|date }}</td><td>{{ post.author.author }}</td>
-                <td>
-                    {% for tag_name in post.tags %}
-                        {{ tag_name.tag }}
-                    {% endfor %}
-                </td>
+        <table class="table">
+            <tr>
+                <th>title</th>
+                <th>dateTime</th>
+                <th>author</th>
+                <th>tags</th>
+                <th></th>
             </tr>
-    {% endfor %}
-    </table>
+            {% for post in listObj %}
+                <tr>
+                    <td>{{ post.title }}</td>
+                    <td>{{ post.dateTime|date }}</td>
+                    <td>{{ post.author.author }}</td>
+                    <td>
+                        {% for tag_name in post.tags %}
+                            {% if not loop.last %}
+                                {{ tag_name.tag }},
+                            {% else %}
+                                {{ tag_name.tag }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a class="glyphicon glyphicon-pencil" title="edit Post"
+                           href="{{ path('admPostMod', {'id':post.id}) }}"></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
     </div>
 {% endblock %}

@@ -7,11 +7,12 @@
         <div class="blog-post">
             <h2 class="blog-post-title">{{ post.title }}</h2>
             <p class="blog-post-meta">{{ post.dateTime|date }} by <a href="#">{{ post.author.author }}</a></p>
-
+            {% if post.tags is not empty %}
+            <span class="glyphicon glyphicon-tag"></span>
                     {% for tag_name in post.tags %}
                         <a class="label label-default ">{{ tag_name.tag }}</a>
                     {% endfor %}
-                </span>
+                {% endif %}
             <p>{{ post.post }}</p>
             <hr>
         </div>
