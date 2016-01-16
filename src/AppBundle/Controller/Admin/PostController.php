@@ -10,6 +10,7 @@ namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Post;
 use AppBundle\Form\PostAddType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -54,12 +55,23 @@ class PostController extends Controller
     public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $listObj = $em->getRepository('AppBundle:Post')
-            ->getPosts();
+        $listObj = $em->getRepository('AppBundle:Post')->getPosts();
         $nav = 9;
 
+
+        $deleteForms = [];
+        foreach ($listObj as $entity) {
+            $deleteForms[$entity->getId()] = $this->createFormBuilder($entity)
+                ->setAction($this->generateUrl('admPostDel', array('id' => $entity->getId())))
+                ->setMethod('DELETE')
+                ->add('submit', SubmitType::class, ['label' => ' ', 'attr' => ['class' => 'glyphicon glyphicon-trash btn-link']])
+                ->getForm()->createView();
+        }
+
+
+
         return $this->render(':blog/Admin:admListPosts.html.twig', [
-            'listObj' => $listObj, 'nav' => $nav
+            'listObj' => $listObj, 'nav' => $nav, 'delForms' => $deleteForms
         ]);
     }
     /**
@@ -76,16 +88,31 @@ class PostController extends Controller
 
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
-            /*$formString = $form->getData()->getTeam()->getCountry(); */
 
             if ($form->isValid()) {
-                /*  $formData = $form->getData(); */
                 $em->flush();
 
-                return $this->render('blog/addItemOk.html.twig',['nav' => $nav]);
+                return $this->redirectToRoute('admPostList');
             }
         }
         return $this->render(':blog/Admin:addItem.html.twig',
             ['form' => $form->createView(),'nav' => $nav]);
     }
+    /**
+     * Deletes a Post entity.
+     *
+     * @Route("/{id}", name="admPostDel")
+     * @Method("DELETE")
+     */
+    public function delAction( $id )
+    {
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('AppBundle:Post')->find($id);
+            $em->remove($entity);
+            $em->flush();
+
+        return $this->redirectToRoute('admPostList');
+    }
+
+
 }

@@ -15,6 +15,7 @@
                 <th>author</th>
                 <th>tags</th>
                 <th></th>
+                <th></th>
             </tr>
             {% for post in listObj %}
                 <tr>
@@ -33,6 +34,11 @@
                     <td>
                         <a class="glyphicon glyphicon-pencil" title="edit Post"
                            href="{{ path('admPostMod', {'id':post.id}) }}"></a>
+                    </td>
+                    <td>
+                        {{ form_start(delForms[post.id], {attr : {onsubmit: 'return confirm("Do you really want to delete?");' }}) }}
+                        {{ form_widget(delForms[post.id].submit) }}
+                        {{ form_end(delForms[post.id]) }}
                     </td>
                 </tr>
             {% endfor %}
