@@ -176,3 +176,6 @@ h6, .h6 {
   color: #3F576F;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+.blog-post-title a, .blog-title a{
+  color: #333;
+}

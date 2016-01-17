@@ -2,20 +2,30 @@
 {% block posts %}
     {#  {{ dump(listObj) }}
         {{ dump(countTag) }} #}
+    {#{{ dump(shortPost) }} #}
     {% for post in listObj %}
         <div class="blog-post">
-            <h2 class="blog-post-title">{{ post.title }}</h2>
+            <h2 class="blog-post-title">
+                {% if nav != 0 %}
+                    <a href="{{ path('showOnePost', {'slug': post.slug }) }}">{{ post.title }}</a>
+                {% else %}{{ post.title }}
+                {% endif %}
+            </h2>
             <p class="blog-post-meta">{{ post.dateTime|date }} by <a href="#">{{ post.author.author }}</a></p>
             {% if post.tags is not empty %}
-            <span class="glyphicon glyphicon-tag"></span>
-                    {% for tag_name in post.tags %}
-                        <a class="label label-default"
-                                {#href="{{ path('postsWithTag', {'tag': tag_name.tag}) }}"#}>
-                            {{ tag_name.tag }}
-                        </a>
-                    {% endfor %}
+                <span class="glyphicon glyphicon-tag"></span>
+                {% for tag_name in post.tags %}
+                    <a class="label label-default"
+                            {#href="{{ path('postsWithTag', {'tag': tag_name.tag}) }}"#}>
+                        {{ tag_name.tag }}
+                    </a>
+                {% endfor %}
+            {% endif %}
+            <p>{{ post.post | nl2br }}
+                {% if post.post|length >299 or nav != 0 %}...
+                    <a href="{{ path('showOnePost', {'slug': post.slug }) }}">read more</a>
                 {% endif %}
-            <p>{{ post.post }}</p>
+            </p>
             <hr>
         </div>
     {% endfor %}

@@ -31,11 +31,11 @@ class AuthorController extends Controller
         $form = $this->createFormBuilder($author)
             ->add('Author', TextType::class)
             ->add('Passw', PasswordType::class)
-            ->add('DateTime', DateTimeType::class)
+           // ->add('DateTime', DateTimeType::class)
             ->add('Add', SubmitType::class)
             ->getForm();
         $form->handleRequest($request);
-        $nav = 2;
+        $nav = 3;
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($author);

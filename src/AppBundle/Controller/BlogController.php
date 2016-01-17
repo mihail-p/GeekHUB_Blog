@@ -38,6 +38,7 @@ class BlogController extends Controller
         $em = $this->getDoctrine()->getManager();
         $listObj = $em->getRepository('AppBundle:Post')->getPosts();
         $countTag = $this->countTag($listObj);
+        $this->shortPost($listObj);
         $nav = 5;
 
         return $this->render(':blog:listPosts.html.twig', [
@@ -52,7 +53,8 @@ class BlogController extends Controller
     {
         $listObj = $this->getDoctrine()->getRepository('AppBundle:Post')->getPostsWithTag($tag);
         $countTag = $this->countTag($listObj);
-        $nav = 0;
+        $this->shortPost($listObj);
+        $nav = 5;
 
         return $this->render(':blog:listPosts.html.twig', ['listObj' => $listObj, 'nav' => $nav,
         'countTag' => $countTag]);
@@ -89,5 +91,15 @@ class BlogController extends Controller
         }
         $countTag = array_count_values($tagEl);
         return $countTag;
+    }
+
+    public function shortPost($listObj)
+    {
+        foreach($listObj as $post){
+            $item = $post->getPost();
+            $string = mb_substr($item, 0, 300, 'UTF-8');
+            $post->setPost($string);
+        }
+        return $listObj;
     }
 }
