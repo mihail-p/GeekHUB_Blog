@@ -1,23 +1,24 @@
-{% if listObj.4.title is defined %}
+{% if countTag is defined %}
     <div class="sidebar-module sidebar-module-inset">
         <div id="myCanvasContainer">
             <canvas width="230" height="230" id="myCanvas">
                 <p>Anything in here will be replaced on browsers that support the canvas element</p>
                 <ul>
-                    {% for post in listObj %}
-                        {% for tag_name in post.tags %}
-                            <li><a href="/name">{{ tag_name.tag }}</a></li>
-                        {% endfor %}
+                    {% for key, value in countTag %}
+                        <a id="tags"
+                           href="{{ path('postsWithTag', {'tag': key }) }}">
+                            {{ key }}
+                        </a>
                     {% endfor %}
                 </ul>
             </canvas>
         </div>
-        <div class="btn-group btn-group-sm" role="group" aria-label="...">
-            {% for post in listObj %}
-                {% for tag_name in post.tags %}
-                    <a type="button" class="btn btn-default" href="{{ path('showOnePost', {'slug':post.slug}) }}">{{ tag_name.tag }}</a>
-                {% endfor %}
-            {% endfor %}
-        </div>
     </div>
+    {% for key, value in countTag %}
+        <a id="tags"
+           href="{{ path('postsWithTag', {'tag': key }) }}">
+            <span style="font-size: {{ 12 + value }}pt">{{ key }}<small>({{ value }})</small></span>
+        </a>
+    {% endfor %}
+    <br><br>
 {% endif %}

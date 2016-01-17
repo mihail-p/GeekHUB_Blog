@@ -16,8 +16,9 @@ class BlogController extends Controller
         // replace this example code with whatever you need
         $nav = 1;
         return $this->render('blog/index.html.twig', ['nav' => $nav
-            ]);
+        ]);
     }
+
     /**
      * @Route("/admin", name="adminBlog")
      */
@@ -26,33 +27,67 @@ class BlogController extends Controller
         // replace this example code with whatever you need
         $nav = 8;
         return $this->render(':blog/Admin:index.html.twig', ['nav' => $nav
-            ]);
+        ]);
     }
+
     /**
-     * @Route("/list", name="postList")
+     * @Route("/posts.list", name="postList")
      */
     public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $listObj = $em->getRepository('AppBundle:Post')
-            ->getPosts();
+        $listObj = $em->getRepository('AppBundle:Post')->getPosts();
+        $countTag = $this->countTag($listObj);
         $nav = 5;
 
         return $this->render(':blog:listPosts.html.twig', [
-            'listObj' => $listObj, 'nav' => $nav
+            'listObj' => $listObj, 'nav' => $nav, 'countTag' => $countTag
         ]);
     }
+
     /**
-     * @param $slug
-     * @return \Symfony\Component\DependencyInjection\ContainerInterface
+     * @Route("/post/tag/{tag}", name="postsWithTag")
+     */
+    public function postsWithTag($tag)
+    {
+        $listObj = $this->getDoctrine()->getRepository('AppBundle:Post')->getPostsWithTag($tag);
+        $countTag = $this->countTag($listObj);
+        $nav = 0;
+
+        return $this->render(':blog:listPosts.html.twig', ['listObj' => $listObj, 'nav' => $nav,
+        'countTag' => $countTag]);
+    }
+
+    /**
      * @Route("/post.show/{slug}", name="showOnePost", requirements={"slug" = "[a-z1-9\-_\/]+"})
      */
     public function showPostAction($slug)
     {
         $em = $this->getDoctrine()->getManager();
         $listObj = $em->getRepository('AppBundle:Post')->findBy(['slug' => $slug]);
+        $countTag = $this->countTag($listObj);
         $nav = 0;
 
-        return $this->render(':blog:listPosts.html.twig', ['listObj' => $listObj, 'nav' => $nav]);
+        return $this->render(':blog:listPosts.html.twig', ['listObj' => $listObj, 'nav' => $nav,
+            'countTag' => $countTag
+        ]);
+    }
+
+    public function countTag($listPosts)
+    {
+        $tags = [];
+        $tagEl = [];
+        $i = 1;
+        foreach ($listPosts as $posts) {
+            $tags[$posts->getId()] = $posts->getTags()->getValues();
+        }
+        foreach ($tags as $tag_name) {
+            foreach ($tag_name as $item) {
+                $tagEl[$i] = $item->getTag();
+                $i++;
+            }
+        }
+        $countTag = array_count_values($tagEl);
+        return $countTag;
     }
 }

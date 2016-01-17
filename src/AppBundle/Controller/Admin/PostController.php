@@ -58,7 +58,6 @@ class PostController extends Controller
         $listObj = $em->getRepository('AppBundle:Post')->getPosts();
         $nav = 9;
 
-
         $deleteForms = [];
         foreach ($listObj as $entity) {
             $deleteForms[$entity->getId()] = $this->createFormBuilder($entity)
@@ -67,8 +66,6 @@ class PostController extends Controller
                 ->add('submit', SubmitType::class, ['label' => ' ', 'attr' => ['class' => 'glyphicon glyphicon-trash btn-link']])
                 ->getForm()->createView();
         }
-
-
 
         return $this->render(':blog/Admin:admListPosts.html.twig', [
             'listObj' => $listObj, 'nav' => $nav, 'delForms' => $deleteForms
@@ -104,7 +101,7 @@ class PostController extends Controller
      * @Route("/{id}", name="admPostDel")
      * @Method("DELETE")
      */
-    public function delAction( $id )
+    public function delAction($id)
     {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('AppBundle:Post')->find($id);

@@ -164,3 +164,15 @@ h6, .h6 {
 .blog-footer p:last-child {
   margin-bottom: 0;
 }
+
+/*
+ * My own styles
+ */
+
+.label {
+  margin: 0.1em
+}
+#tags {
+  color: #3F576F;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
