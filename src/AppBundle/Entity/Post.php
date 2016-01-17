@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation\Slug;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -10,6 +12,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="post")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PostRepository")
+ * @UniqueEntity(
+ *     fields={"title"},
+ *     message="This value must be unique!"
+ * )
  */
 class Post
 {
@@ -33,9 +39,16 @@ class Post
      * @var string
      *
      * @Assert\NotBlank()
-     * @ORM\Column(name="Title", type="string", length=255)
+     * @ORM\Column(name="Title", type="string", length=150, unique=true)
      */
     private $title;
+
+    /**
+     * @var string
+     * @Slug(fields={"title"})
+     * @ORM\Column(name="slug", type="string", length=150, unique=true)
+     */
+    private $slug;
 
     /**
      * @var \DateTime
@@ -202,4 +215,29 @@ class Post
     {
         return $this->tags;
     }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Post
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
 }
+

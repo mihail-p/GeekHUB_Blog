@@ -15,7 +15,7 @@
         <div class="btn-group btn-group-sm" role="group" aria-label="...">
             {% for post in listObj %}
                 {% for tag_name in post.tags %}
-                    <a type="button" class="btn btn-default" href="#{{ loop.index0 }}">{{ tag_name.tag }}</a>
+                    <a type="button" class="btn btn-default" href="{{ path('showOnePost', {'slug':post.slug}) }}">{{ tag_name.tag }}</a>
                 {% endfor %}
             {% endfor %}
         </div>

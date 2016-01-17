@@ -42,4 +42,17 @@ class BlogController extends Controller
             'listObj' => $listObj, 'nav' => $nav
         ]);
     }
+    /**
+     * @param $slug
+     * @return \Symfony\Component\DependencyInjection\ContainerInterface
+     * @Route("/post.show/{slug}", name="showOnePost", requirements={"slug" = "[a-z1-9\-_\/]+"})
+     */
+    public function showPostAction($slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $listObj = $em->getRepository('AppBundle:Post')->findBy(['slug' => $slug]);
+        $nav = 0;
+
+        return $this->render(':blog:listPosts.html.twig', ['listObj' => $listObj, 'nav' => $nav]);
+    }
 }

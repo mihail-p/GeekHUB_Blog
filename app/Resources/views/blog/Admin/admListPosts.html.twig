@@ -10,6 +10,7 @@
     <div class="blog-post">
         <table class="table">
             <tr>
+                <th>id</th>
                 <th>title</th>
                 <th>dateTime</th>
                 <th>author</th>
@@ -19,6 +20,7 @@
             </tr>
             {% for post in listObj %}
                 <tr>
+                    <td>{{ loop.index }}</td>
                     <td>{{ post.title }}</td>
                     <td>{{ post.dateTime|date }}</td>
                     <td>{{ post.author.author }}</td>
