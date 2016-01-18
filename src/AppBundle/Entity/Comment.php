@@ -3,11 +3,12 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Comments
  *
- * @ORM\Table(name="comments")
+ * @ORM\Table(name="comment")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CommentRepository")
  */
 class Comment
@@ -31,7 +32,8 @@ class Comment
     /**
      * @var string
      *
-     * @ORM\Column(name="Comment", type="string", length=255)
+     * @ORM\Column(name="Comment", type="text")
+     * @Assert\NotBlank()
      */
     private $comment;
 

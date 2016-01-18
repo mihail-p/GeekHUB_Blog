@@ -2,9 +2,12 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Comment;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Form\CommentAddType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class BlogController extends Controller
 {
@@ -63,19 +66,37 @@ class BlogController extends Controller
     /**
      * @Route("/post.show/{slug}", name="showOnePost", requirements={"slug" = "[a-z1-9\-_\/]+"})
      */
-    public function showPostAction($slug)
+    public function showPostAction(Request $request,  $slug)
     {
+        $comment = new Comment();
+        $comment->setDateTime(new \DateTime());
+
+
+        $form = $this->createForm(new CommentAddType(), $comment);
+        $form->add('add comment', SubmitType::class);
+
+        $form->handleRequest($request);
+
         $em = $this->getDoctrine()->getManager();
         $listObj = $em->getRepository('AppBundle:Post')->findBy(['slug' => $slug]);
         $countTag = $this->countTag($listObj);
         $nav = 0;
 
+        if ($form->isValid()) {
+            $emen = $this->getDoctrine()->getManager();
+            $emen->persist($comment);
+            $emen->flush();
+
+            $nav = 11;
+            return $this->render(':blog:addItemOk.html.twig', ['nav' => $nav]);
+        }
+
         return $this->render(':blog:listPosts.html.twig', ['listObj' => $listObj, 'nav' => $nav,
-            'countTag' => $countTag
+            'countTag' => $countTag, 'form' => $form->createView()
         ]);
     }
 
-    public function countTag($listPosts)
+    private function countTag($listPosts)
     {
         $tags = [];
         $tagEl = [];
@@ -93,7 +114,7 @@ class BlogController extends Controller
         return $countTag;
     }
 
-    public function shortPost($listObj)
+    private function shortPost($listObj)
     {
         foreach($listObj as $post){
             $item = $post->getPost();

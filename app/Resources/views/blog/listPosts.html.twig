@@ -11,6 +11,7 @@
                 {% else %}{{ post.title }}
                 {% endif %}
             </h2>
+
             <p class="blog-post-meta">{{ post.dateTime|date }} by <a href="#">{{ post.author.author }}</a></p>
             {% if post.tags is not empty %}
                 <span class="glyphicon glyphicon-tag"></span>
@@ -22,11 +23,16 @@
                 {% endfor %}
             {% endif %}
             <p>{{ post.post | nl2br }}
-                {% if post.post|length >299 or nav != 0 %}...
+                {% if post.post|length >299 and nav != 0 %}...
                     <a href="{{ path('showOnePost', {'slug': post.slug }) }}">read more</a>
                 {% endif %}
-            </p>
-            <hr>
+            </p><hr>
+            {% if nav == 0 %}
+                <h3>Comments:</h3>
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            {% endif %}
         </div>
     {% endfor %}
 {% endblock %}

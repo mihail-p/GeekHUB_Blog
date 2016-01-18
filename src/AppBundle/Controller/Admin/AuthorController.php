@@ -35,7 +35,7 @@ class AuthorController extends Controller
             ->add('Add', SubmitType::class)
             ->getForm();
         $form->handleRequest($request);
-        $nav = 3;
+        $nav = 2;
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($author);
