@@ -3,6 +3,11 @@
     {#  {{ dump(listObj) }}
         {{ dump(countTag) }} #}
     {#{{ dump(shortPost) }} #}
+    {% if nav == 9 %}
+        <h3>You search: <b>{{ query }}</b></h3>
+        <hr>
+        {% if listObj == null %}<h3>No Results</h3>{% endif %}<br>
+    {% endif %}
     {% for post in listObj %}
         <div class="blog-post">
             <h2 class="blog-post-title">
@@ -28,6 +33,14 @@
                 {% endif %}
             </p><hr>
             {% if nav == 0 %}
+                {% for item in post.comments %}
+                    <span class="blog-description">score:</span> {{ item.score }},
+                    <span class="blog-description">author: </span> {{ item.author.author }}
+                    <div class="alert alert-info">
+                        <p>{{ item.comment }}</p>
+                    </div> {#{{ dump(item) }}#}
+
+                {% endfor %}
                 <h3>Comments:</h3>
                 {{ form_start(form) }}
                 {{ form_widget(form) }}

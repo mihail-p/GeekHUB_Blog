@@ -64,10 +64,18 @@ class Post
      * @ORM\Column(name="Post", type="text")
      */
     private $post;
+
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Tag", inversedBy="posts")
      */
     private $tags;
+
+    /**
+     * @var
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="post")
+     */
+    private $comments;
 
     /**
      * Get id
@@ -239,5 +247,39 @@ class Post
     {
         return $this->slug;
     }
-}
 
+
+    /**
+     * Add comment
+     *
+     * @param \AppBundle\Entity\Comment $comment
+     *
+     * @return Post
+     */
+    public function addComment(\AppBundle\Entity\Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \AppBundle\Entity\Comment $comment
+     */
+    public function removeComment(\AppBundle\Entity\Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+}

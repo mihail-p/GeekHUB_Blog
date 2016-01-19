@@ -43,7 +43,7 @@ class TagController extends Controller
             $em->persist($tag);
             $em->flush();
 
-            return $this->render(':blog:addItemOk.html.twig', ['nav' => $nav]);
+            return $this->render(':blog/Admin:addItemOk.html.twig', ['nav' => $nav]);
         }
 
         return $this->render(':blog/Admin:addItem.html.twig', [

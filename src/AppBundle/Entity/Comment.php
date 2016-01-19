@@ -38,12 +38,18 @@ class Comment
     private $comment;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Author")
+     * @ORM\Column(name="score", type="integer", nullable=false)
+     * @Assert\Range(min="1", max="5")
+     */
+    private $score;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Author")
      */
     protected $author;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Post")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Post", inversedBy="comments")
      */
     protected $post;
 
@@ -104,6 +110,22 @@ class Comment
     public function getComment()
     {
         return $this->comment;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getScore()
+    {
+        return $this->score;
+    }
+
+    /**
+     * @param mixed $score
+     */
+    public function setScore($score)
+    {
+        $this->score = $score;
     }
 
     /**

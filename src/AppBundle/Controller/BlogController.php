@@ -80,20 +80,33 @@ class BlogController extends Controller
         $em = $this->getDoctrine()->getManager();
         $listObj = $em->getRepository('AppBundle:Post')->findBy(['slug' => $slug]);
         $countTag = $this->countTag($listObj);
+        $comment->setPost($listObj[0]);
         $nav = 0;
 
         if ($form->isValid()) {
-            $emen = $this->getDoctrine()->getManager();
-            $emen->persist($comment);
-            $emen->flush();
+            $em->persist($comment);
+            $em->flush();
 
-            $nav = 11;
-            return $this->render(':blog:addItemOk.html.twig', ['nav' => $nav]);
+            return $this->render(':blog:addCommentOk.html.twig', ['nav' => $nav]);
         }
 
         return $this->render(':blog:listPosts.html.twig', ['listObj' => $listObj, 'nav' => $nav,
             'countTag' => $countTag, 'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/search", name="search")
+     */
+    public function searchAction(Request $request)
+    {
+        $query = $request->get('query');
+        $em = $this->getDoctrine()->getManager();
+        $listObj = $em->getRepository('AppBundle:Post')->search($query);
+        $nav = 9;
+
+       return $this->render(':blog:listPosts.html.twig', ['listObj' => $listObj, 'nav' => $nav, 'query' => $query]);
+
     }
 
     private function countTag($listPosts)

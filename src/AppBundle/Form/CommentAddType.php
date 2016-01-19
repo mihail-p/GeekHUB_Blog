@@ -2,7 +2,7 @@
 
 namespace AppBundle\Form;
 
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -17,8 +17,17 @@ class CommentAddType extends AbstractType
             ->add('author', EntityType::class, [
                 'class' => 'AppBundle\Entity\Author',
                 'choice_label' => 'author'])
+            ->add('score', ChoiceType::class, [
+                'choices' => [
+                    'one' => 1,
+                    'two' => 2,
+                    'three' => 3,
+                    'four' => 4,
+                    'five' => 5
+                ], 'choices_as_values' =>true
+            ])
             ->add('comment', TextareaType::class,[
-                'attr' => array('cols' => '60', 'rows' => '8')
+                'attr' => array('cols' => '57', 'rows' => '7')
             ]);
     }
     public function configureOptions(OptionsResolver $resolver)

@@ -25,4 +25,18 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function search($query)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p, pt')
+            ->leftJoin('p.tags', 'pt')
+            ->orWhere('pt.tag = :q')
+            ->orWhere("p.post LIKE '%$query%'")
+            ->orWhere("p.title LIKE '%$query%'")
+            ->setParameter('q', $query)
+            ->orderBy('p.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }
