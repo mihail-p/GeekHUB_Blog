@@ -27,6 +27,7 @@
                     </a>
                 {% endfor %}
             {% endif %}
+            {#<br><img class=" img-thumbnail" src="{{ '/pict/programming.jpg' | imagine_filter('thumb_one') }}" />#}
             <p>{{ post.post | nl2br }}
                 {% if post.post|length >299 and nav != 0 %}...
                     <a href="{{ path('showOnePost', {'slug': post.slug }) }}">read more</a>

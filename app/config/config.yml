@@ -64,6 +64,20 @@ stof_doctrine_extensions:
         default:
             sluggable: true
 
+# Liip Imagine Bundle
+liip_imagine:
+    resolvers:
+       default:
+          web_path: ~
+    driver: gd
+
+    filter_sets:
+        cache: ~
+        thumb_one:
+            quality: 75
+            filters:
+                thumbnail: { size: [120, 90], mode: outbound }
+
 # Swiftmailer Configuration
 swiftmailer:
     transport: "%mailer_transport%"
