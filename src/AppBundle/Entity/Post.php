@@ -66,7 +66,7 @@ class Post
     /**
      * @var string
      *
-     * @Assert\NotBlank()
+     * @Assert\Length(min="20", minMessage="Post must be at least 20 chars.")
      * @ORM\Column(name="Post", type="text")
      */
     private $post;

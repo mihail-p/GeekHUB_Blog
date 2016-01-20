@@ -83,25 +83,30 @@ class BlogController extends Controller
         $countTag = $this->countTag($post);
         $comment->setPost($post);
         $nav = 0;
-                                      $sumScore = 0;
+
         if ($form->isValid()) {
-            $scores = $post->getComments()->getValues();
-            $numComments = $post->getComments()->count();
+            /* total comments */
+            $comments = $post->getComments()->getValues();
+            $ammComments = $post->getComments()->count();
+            if ($ammComments == 0) { /* div. by zero */
+                $ammComments = 1;
+            } else {
+                $ammComments++;/* because current! comment*/
+            }
             $sumScore = 0;
-            foreach ($scores as $item) {
+            foreach ($comments as $item) {
                 $number = $item->getscore();
                 $sumScore = $sumScore + $number;
             }
-            $op = $sumScore / $numComments;
-            $totalScore = round($op, 2);
+            $sumScore = $sumScore + $comment->getScore();
+            $totalScore = round($sumScore / $ammComments);
             $post->setTotalScore($totalScore);
+            /* end total comments */
 
             $em->persist($comment);
             $em->flush();
 
-            return $this->render(':blog:addCommentOk.html.twig', ['nav' => $nav,
-                'op'=>$op, 'totalScore' => $totalScore, 'scores' => $scores, 'sumScore'=>$sumScore,
-                'numComments'=> $numComments]);
+            return $this->render(':blog:addCommentOk.html.twig', ['nav' => $nav, 'comment' => $comment]);
         }
 
         return $this->render(':blog:listOnePost.html.twig', ['post' => $post, 'nav' => $nav,
