@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation\Slug;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -56,6 +57,11 @@ class Post
      * @ORM\Column(name="DateTime", type="datetime")
      */
     private $dateTime;
+
+    /**
+     * @ORM\Column(name="total_score", type="integer")
+     */
+    private $totalScore;
 
     /**
      * @var string
@@ -136,6 +142,22 @@ class Post
     }
 
     /**
+     * @return mixed
+     */
+    public function getTotalScore()
+    {
+        return $this->totalScore;
+    }
+
+    /**
+     * @param mixed $totalScore
+     */
+    public function setTotalScore($totalScore)
+    {
+        $this->totalScore = $totalScore;
+    }
+
+    /**
      * Set post
      *
      * @param string $post
@@ -187,7 +209,8 @@ class Post
      */
     public function __construct()
     {
-        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tags = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     /**

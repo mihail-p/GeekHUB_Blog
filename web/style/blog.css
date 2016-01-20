@@ -183,3 +183,12 @@ h6, .h6 {
 .alert-info {
   font-size: medium;
 }
+
+.img-thumbnail{
+  float: left;
+}
+
+#rating{
+  color: #878020;
+  padding-right: 1em;
+}

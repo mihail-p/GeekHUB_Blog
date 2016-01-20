@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Comment;
+use AppBundle\Entity\Post;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,9 +35,9 @@ class BlogController extends Controller
     }
 
     /**
-     * @Route("/posts.list", name="postList")
+     * @Route("/posts.list", name="postsList")
      */
-    public function listAction()
+    public function listPostsAction()
     {
         $em = $this->getDoctrine()->getManager();
         $listObj = $em->getRepository('AppBundle:Post')->getPosts();
@@ -52,7 +53,7 @@ class BlogController extends Controller
     /**
      * @Route("/post/tag/{tag}", name="postsWithTag")
      */
-    public function postsWithTag($tag)
+    public function postsWithTagAction($tag)
     {
         $listObj = $this->getDoctrine()->getRepository('AppBundle:Post')->getPostsWithTag($tag);
         $countTag = $this->countTag($listObj);
@@ -60,13 +61,13 @@ class BlogController extends Controller
         $nav = 5;
 
         return $this->render(':blog:listPosts.html.twig', ['listObj' => $listObj, 'nav' => $nav,
-        'countTag' => $countTag]);
+            'countTag' => $countTag]);
     }
 
     /**
      * @Route("/post.show/{slug}", name="showOnePost", requirements={"slug" = "[a-z1-9\-_\/]+"})
      */
-    public function showPostAction(Request $request,  $slug)
+    public function showPostAction(Request $request, $slug)
     {
         $comment = new Comment();
         $comment->setDateTime(new \DateTime());
@@ -78,19 +79,32 @@ class BlogController extends Controller
         $form->handleRequest($request);
 
         $em = $this->getDoctrine()->getManager();
-        $listObj = $em->getRepository('AppBundle:Post')->findBy(['slug' => $slug]);
-        $countTag = $this->countTag($listObj);
-        $comment->setPost($listObj[0]);
+        $post = $em->getRepository('AppBundle:Post')->findOneBy(['slug' => $slug]);
+        $countTag = $this->countTag($post);
+        $comment->setPost($post);
         $nav = 0;
-
+                                      $sumScore = 0;
         if ($form->isValid()) {
+            $scores = $post->getComments()->getValues();
+            $numComments = $post->getComments()->count();
+            $sumScore = 0;
+            foreach ($scores as $item) {
+                $number = $item->getscore();
+                $sumScore = $sumScore + $number;
+            }
+            $op = $sumScore / $numComments;
+            $totalScore = round($op, 2);
+            $post->setTotalScore($totalScore);
+
             $em->persist($comment);
             $em->flush();
 
-            return $this->render(':blog:addCommentOk.html.twig', ['nav' => $nav]);
+            return $this->render(':blog:addCommentOk.html.twig', ['nav' => $nav,
+                'op'=>$op, 'totalScore' => $totalScore, 'scores' => $scores, 'sumScore'=>$sumScore,
+                'numComments'=> $numComments]);
         }
 
-        return $this->render(':blog:listPosts.html.twig', ['listObj' => $listObj, 'nav' => $nav,
+        return $this->render(':blog:listOnePost.html.twig', ['post' => $post, 'nav' => $nav,
             'countTag' => $countTag, 'form' => $form->createView()
         ]);
     }
@@ -105,7 +119,7 @@ class BlogController extends Controller
         $listObj = $em->getRepository('AppBundle:Post')->search($query);
         $nav = 9;
 
-       return $this->render(':blog:listPosts.html.twig', ['listObj' => $listObj, 'nav' => $nav, 'query' => $query]);
+        return $this->render(':blog:listPosts.html.twig', ['listObj' => $listObj, 'nav' => $nav, 'query' => $query]);
 
     }
 
@@ -129,7 +143,7 @@ class BlogController extends Controller
 
     private function shortPost($listObj)
     {
-        foreach($listObj as $post){
+        foreach ($listObj as $post) {
             $item = $post->getPost();
             $string = mb_substr($item, 0, 300, 'UTF-8');
             $post->setPost($string);

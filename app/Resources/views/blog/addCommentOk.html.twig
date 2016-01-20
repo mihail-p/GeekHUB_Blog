@@ -1,5 +1,10 @@
 {% extends '::blog.base.html.twig' %}
 {% block blog_Post %}
+    {{ dump(scores) }}
+    sumScore: {{ dump(sumScore) }}
+    numComments{{ dump(numComments) }}
+    op: {{ dump(op) }}
+    totalScore: {{ dump(totalScore) }}
     <h3>Your comment was successfully added.</h3>
     <hr>
 {% endblock %}
