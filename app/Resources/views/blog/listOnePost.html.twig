@@ -13,7 +13,7 @@
             <p class="blog-post-meta">
                 {% if post.totalScore > 0 %}
                     <span class="glyphicon glyphicon-star text-warning" aria-hidden="true" title="rating"></span>
-                    <span id="rating">{{ post.totalScore }}</span>
+                    <span id="rating" title="rating">{{ post.totalScore }}</span>
                 {% endif %}
                 {{ post.dateTime|date }} by <a href="#">{{ post.author.author }}</a>
             </p>
@@ -29,11 +29,16 @@
             {#{% set runtimeConfig = {"thumbnail": {"size": [160, 110] }} %}#}
             <div>
                 <img class=" img-thumbnail" src="{{ asset('pict/programming.jpg') | imagine_filter('thumb_300') }}" />
-                {{ post.post | nl2br }}
+                <p>{{ post.post | nl2br }}</p>
+                <p class="clear clearfix"></p>
             <hr>
             </div>
         </div>
-                             {#--- Comments ---#}
+    {#--- Comments ---#}
+    <div class="media">
+        <div class="media-body">
+            <h3>Comments:</h3>
+            <span class="glyphicon glyphicon-comment"></span><br>
             {% for item in post.comments %}
                 <span class="blog-description">score:</span> {{ item.score }},
                 <span class="blog-description">author: </span> {{ item.author.author }}
@@ -41,10 +46,16 @@
                     <p>{{ item.comment }}</p>
                 </div>
             {% endfor %}
-            <h3>Comments:</h3>
+        </div>
+    </div>
+    <div class="media">
+        <div class="media-body">
+            <h4>Your comment:</h4>
             {{ form_start(form) }}
             {{ form_widget(form) }}
             {{ form_end(form) }}
-                             {#--- Comments ---#}
+        </div>
+    </div>
+    {#--- end Comments ---#}
     {#--- end block post ---#}
 {% endblock %}

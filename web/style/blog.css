@@ -192,3 +192,15 @@ h6, .h6 {
   color: #878020;
   padding-right: 1em;
 }
+
+#comment {
+  background-color: #F7F5FD;
+  border: 1px solid #EADEDE;
+  margin-left: 1em;
+  padding: 0.3em;
+  padding-left: 1em;
+}
+
+#head-comment{
+  border: 1px solid #EADEDE;
+}

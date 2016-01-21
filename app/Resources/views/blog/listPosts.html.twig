@@ -19,10 +19,11 @@
                 <a href="{{ path('showOnePost', {'slug': post.slug }) }}">{{ post.title }}</a>
                 {#<span class="badge" title="rating">{{ post.totalScore }}</span>#}
             </h2>
+
             <p class="blog-post-meta">
                 {% if post.totalScore > 0 %}
-                <span class="glyphicon glyphicon-star text-warning" aria-hidden="true" title="rating"></span>
-                <span id="rating">{{ post.totalScore }}</span>
+                    <span class="glyphicon glyphicon-star text-warning" aria-hidden="true" title="rating"></span>
+                    <span id="rating" title="rating">{{ post.totalScore }}</span>
                 {% endif %}
                 {{ post.dateTime|date }} by <a href="#">{{ post.author.author }}</a>
             </p>
@@ -35,34 +36,16 @@
                     </a>
                 {% endfor %}
             {% endif %}
-            {#{% set runtimeConfig = {"thumbnail": {"size": [160, 110] }} %}
-            {#<br><img class=" img-thumbnail" src="{{ 'pict/programming.jpg' | imagine_filter('thumb_one') }}" />#}
-            <p>
-                <img class=" img-thumbnail" src="{{ asset('pict/programming.jpg') | imagine_filter('thumb_160') }}" />
+            {#{% set runtimeConfig = {"thumbnail": {"size": [160, 110] }} %}#}
+            <img class=" img-thumbnail" src="{{ asset('pict/programming.jpg') | imagine_filter('thumb_160') }}"/>
+            <div class="clearfix">
                 {{ post.post | nl2br }}
                 {% if post.post|length >299 and nav != 0 %}...
                     <a href="{{ path('showOnePost', {'slug': post.slug }) }}">read more</a>
                 {% endif %}
+            </div>
             <hr>
-            </p>
         </div>
-                             {#--- Comments ---#}
-        {% if nav == 0 %}
-            {% for item in post.comments %}
-                <span class="blog-description">score:</span> {{ item.score }},
-                <span class="blog-description">author: </span> {{ item.author.author }}
-                <div class="alert alert-info">
-                    <p>{{ item.comment }}</p>
-                </div> {#{{ dump(item) }}#}
-
-            {% endfor %}
-            <h3>Comments:</h3>
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            {{ form_end(form) }}
-        {% endif %}
-                             {#--- Comments ---#}
-
     {% endfor %}
     {#--- end block post ---#}
 {% endblock %}

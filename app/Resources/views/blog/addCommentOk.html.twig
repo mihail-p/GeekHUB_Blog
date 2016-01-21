@@ -1,9 +1,15 @@
 {% extends '::blog.base.html.twig' %}
 {% block blog_Post %}
-   score: {{ comment.score }}
-    <p>Comment:<br>
-       {{ comment.comment }}
-   </p>
+    <div class="media">
+        <div class="media-body">
+            <p class="media-heading">
+                <span class="text-muted">score: </span><span class="text-danger">{{ comment.score }}</span>
+                <span class="text-muted">date: </span>{{ comment.dateTime | date }}
+            </p>
+            <p class="media-heading text-muted">Comment:</p>
+            <p id="comment"> {{ comment.comment }}</p><br>
+        </div>
+    </div>
     <h3>Your comment and score was successfully added.</h3>
     <hr>
 {% endblock %}
