@@ -1,27 +1,4 @@
-{% if sortTotalScore is defined %}
-<div class="sidebar-module sidebar-module-inset">
-    <h4>Last 5 popular Posts:</h4>
-    <ul>
-        {% for key, value in sortTotalScore %}
-            <li>
-                <a href="{{ path('showOnePost', {'slug': key}) }}">{{ key }}</a>
-            </li>
-        {% endfor %}
-    </ul>
-</div>
-{% endif %}
-{% if listComm is defined %}
-<div class="sidebar-module sidebar-module-inset">
-    <h4>Last 5 comments:</h4>
-    <ul>
-        {% for item in listComm %}
-            <li>
-                <a href="{{ path('showOnePost', {'slug': item.post.slug}) }}">{{ item.comment }}</a>
-            </li>
-        {% endfor %}
-    </ul>
-</div>
-{% endif %}
+{#--- tag cloud ---#}
 {% if countTag is defined %}
     <div class="sidebar-module sidebar-module-inset">
         <div id="myCanvasContainer">
@@ -45,4 +22,32 @@
         </a>
     {% endfor %}
     <br><br>
+{% endif %}
+
+{#--- Popular posts ---#}
+{% if sortTotalScore is defined %}
+<div class="sidebar-module sidebar-module-inset">
+    <h4>5 popular Posts:</h4>
+    <ul>
+        {% for key, value in sortTotalScore %}
+            <li>
+                <a href="{{ path('showOnePost', {'slug': key}) }}">{{ value }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{#--- last comments ---#}
+{% if listComm is defined %}
+<div class="sidebar-module sidebar-module-inset">
+    <h4>Last 5 comments:</h4>
+    <ul>
+        {% for item in listComm %}
+            <li>
+                <a href="{{ path('showOnePost', {'slug': item.post.slug}) }}">{{ item.comment }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
 {% endif %}

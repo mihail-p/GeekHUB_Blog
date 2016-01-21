@@ -88,7 +88,7 @@ class BlogController extends Controller
         $nav = 0;
 
         if ($form->isValid()) {
-            /* total comments */
+            /* calc and persist totalScore from comments */
             $comments = $post->getComments()->getValues();
             $ammComments = $post->getComments()->count();
             if ($ammComments == 0) { /* div. by zero */
@@ -173,12 +173,21 @@ class BlogController extends Controller
 
     private function sortTotalScore( $listObj)
     {
+        $arrTitle =[];
         foreach($listObj as $post){
             $slug = $post->getSlug();
+            $title = $post->getTitle();
+            $arrTitle[$slug] = $title;
             $arr[$slug] = $post->getTotalScore();
         }
         arsort($arr);
         $sortArr = array_slice($arr, 0, 5, true);
+        /* replace totalScore to title  */
+        foreach ($arrTitle as $key => $value) {
+            foreach($sortArr as $sortKey => $sortValue){
+                if($sortKey == $key){$sortArr[$sortKey] = $value;}
+            }
+        }
         return $sortArr;
     }
 }

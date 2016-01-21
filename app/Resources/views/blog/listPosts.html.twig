@@ -1,8 +1,6 @@
 {% extends 'blog.base.html.twig' %}
 {% block posts %}
 
-     {{ dump(sortTotalScore) }}
-
     {#--- search block ---#}
     {% if nav == 9 %}
         <h3>You search: <b>{{ query }}</b></h3>
@@ -35,7 +33,6 @@
                     </a>
                 {% endfor %}
             {% endif %}
-            {#{% set runtimeConfig = {"thumbnail": {"size": [160, 110] }} %}#}
             <img class=" img-thumbnail" src="{{ asset('pict/programming.jpg') | imagine_filter('thumb_160') }}"/>
             <div class="clearfix">
                 {{ post.post | nl2br }}
