@@ -1,3 +1,15 @@
+{% if listComm is defined %}
+<div class="sidebar-module sidebar-module-inset">
+    <h4>Last 5 comments:</h4>
+    <ul>
+        {% for item in listComm %}
+            <li>
+                <a href="{{ path('showOnePost', {'slug': item.post.slug}) }}">{{ item.comment }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
 {% if countTag is defined %}
     <div class="sidebar-module sidebar-module-inset">
         <div id="myCanvasContainer">

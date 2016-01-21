@@ -41,12 +41,14 @@ class BlogController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $listObj = $em->getRepository('AppBundle:Post')->getPosts();
+        $listComm = $em->getRepository('AppBundle:Comment')->getLastComments(5);
         $countTag = $this->countTag($listObj);
         $this->shortPost($listObj);
+        $this->shortComment($listComm);
         $nav = 5;
 
         return $this->render(':blog:listPosts.html.twig', [
-            'listObj' => $listObj, 'nav' => $nav, 'countTag' => $countTag
+            'listObj' => $listObj, 'nav' => $nav, 'countTag' => $countTag, 'listComm' => $listComm
         ]);
     }
 
@@ -152,6 +154,18 @@ class BlogController extends Controller
             $item = $post->getPost();
             $string = mb_substr($item, 0, 300, 'UTF-8');
             $post->setPost($string);
+        }
+        return $listObj;
+    }
+
+    private function shortComment($listObj)
+    {
+        foreach ($listObj as $comm) {
+            $item = $comm->getComment();
+            if (mb_strlen($item, 'UTF-8') > 30){
+                $string = mb_substr($item, 0, 30, 'UTF-8').'...';
+                $comm->setComment($string);
+            }
         }
         return $listObj;
     }

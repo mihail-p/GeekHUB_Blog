@@ -37,11 +37,19 @@
     {#--- Comments ---#}
     <div class="media">
         <div class="media-body">
-            <h3>Comments:</h3>
+            <h3 class="media-heading">Comments:</h3>
             <span class="glyphicon glyphicon-comment"></span><br>
             {% for item in post.comments %}
-                <span class="blog-description">score:</span> {{ item.score }},
-                <span class="blog-description">author: </span> {{ item.author.author }}
+                <div class="media-left">
+                    <span class="blog-description">score:</span> {{ item.score }},
+                    <span class="blog-description">author: </span> {{ item.author.author }}
+                </div>
+                <div class="media-right">
+                    <p>
+                        <span class="blog-description ">date: </span>
+                        <span>{{ item.author.dateTime | date }}</span>
+                    </p>
+                </div>
                 <div class="alert alert-info">
                     <p>{{ item.comment }}</p>
                 </div>
