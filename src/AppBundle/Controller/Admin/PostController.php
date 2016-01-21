@@ -31,6 +31,7 @@ class PostController extends Controller
         $post = new Post();
         $post->setTitle('Title_1');
         $post->setDateTime(new \DateTime());
+        $post->setTotalScore(0);
 
         $form = $this->createForm(new PostAddType(), $post);
         $form->add('add post', SubmitType::class);

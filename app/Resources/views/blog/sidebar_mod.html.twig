@@ -1,3 +1,15 @@
+{% if sortTotalScore is defined %}
+<div class="sidebar-module sidebar-module-inset">
+    <h4>Last 5 popular Posts:</h4>
+    <ul>
+        {% for key, value in sortTotalScore %}
+            <li>
+                <a href="{{ path('showOnePost', {'slug': key}) }}">{{ key }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
 {% if listComm is defined %}
 <div class="sidebar-module sidebar-module-inset">
     <h4>Last 5 comments:</h4>

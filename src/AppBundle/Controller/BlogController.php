@@ -45,10 +45,11 @@ class BlogController extends Controller
         $countTag = $this->countTag($listObj);
         $this->shortPost($listObj);
         $this->shortComment($listComm);
+        $sortTS = $this->sortTotalScore($listObj);
         $nav = 5;
 
-        return $this->render(':blog:listPosts.html.twig', [
-            'listObj' => $listObj, 'nav' => $nav, 'countTag' => $countTag, 'listComm' => $listComm
+        return $this->render(':blog:listPosts.html.twig', ['listObj' => $listObj, 'nav' => $nav,
+            'countTag' => $countTag, 'listComm' => $listComm, 'sortTotalScore' => $sortTS
         ]);
     }
 
@@ -168,5 +169,16 @@ class BlogController extends Controller
             }
         }
         return $listObj;
+    }
+
+    private function sortTotalScore( $listObj)
+    {
+        foreach($listObj as $post){
+            $slug = $post->getSlug();
+            $arr[$slug] = $post->getTotalScore();
+        }
+        arsort($arr);
+        $sortArr = array_slice($arr, 0, 5, true);
+        return $sortArr;
     }
 }
