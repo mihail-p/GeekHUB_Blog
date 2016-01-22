@@ -1,8 +1,10 @@
 AppBundle\Entity\Post:
     post{1..10}:
+        __construct: false
         author: '@author*'
         title (unique): <sentence()>
         slug (unique): <slug()>
         dateTime: <dateTime($max = 'now')>
         totalScore: <numberBetween($min = 0, $max = 5)>
         post: <text(700)>
+        tags: ['@tag*', '@tag*', '@tag*', '@tag*']
