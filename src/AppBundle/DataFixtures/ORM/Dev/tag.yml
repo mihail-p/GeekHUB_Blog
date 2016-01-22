@@ -1,0 +1,4 @@
+AppBundle\Entity\Tag:
+    tag{1..20}:
+        tag: <domainWord()>
+        

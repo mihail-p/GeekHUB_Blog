@@ -1,0 +1,7 @@
+AppBundle\Entity\Comment:
+    comment{1..50}:
+        dateTime: <dateTime($max = 'now')>
+        comment: <text(50)>
+        score: <numberBetween($min = 0, $max = 5)>
+        author: '@author*'
+        post: '@post*'

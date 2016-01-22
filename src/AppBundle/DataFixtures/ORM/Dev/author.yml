@@ -1,0 +1,5 @@
+AppBundle\Entity\Author:
+    author{1..15}:
+        author: <name()>
+        passw: <password()>
+        dateTime: <dateTime($max = 'now')>
