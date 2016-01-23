@@ -1,0 +1,21 @@
+{
+  "name": "blog.local",
+  "description": "Simple Blog",
+  "main": "index.js",
+  "authors": [
+    "Mikhail Pronyuk"
+  ],
+  "license": "BSD-2-Clause",
+  "homepage": "https://github.com/mihail-p/GeekHUB_Blog",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6"
+  }
+}

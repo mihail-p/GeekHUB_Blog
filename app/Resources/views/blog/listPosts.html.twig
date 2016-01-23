@@ -33,7 +33,7 @@
                     </a>
                 {% endfor %}
             {% endif %}
-            <img class=" img-thumbnail" src="{{ asset('pict/programming.jpg') | imagine_filter('thumb_160') }}"/>
+            <img class=" img-thumbnail" src="{{ asset('img/programming.jpg') | imagine_filter('thumb_160') }}"/>
             <div class="clearfix">
                 {{ post.post | nl2br }}
                 {% if post.post|length >299 and nav != 0 %}...

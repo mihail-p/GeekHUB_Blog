@@ -10,3 +10,10 @@
 /vendor/
 /web/bundles/
 /web/media/
+/bower_components/
+/node_modules/
+/web/img/
+/web/js/
+/web/css/
+/web/fonts/
+
