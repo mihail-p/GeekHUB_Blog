@@ -42,6 +42,7 @@ class TagController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($tag);
             $em->flush();
+            $msg = 'tag added';
 
             return $this->render(':blog/Admin:addItemOk.html.twig', ['msg' => $msg]);
         }

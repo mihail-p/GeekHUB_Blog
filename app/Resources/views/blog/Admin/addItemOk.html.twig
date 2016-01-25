@@ -1,9 +1,5 @@
 {% extends ':blog/Admin:index.html.twig' %}
 {% block blog_Post %}
-    <h3>{{ msg }}
-        {% elseif nav == 4 %}post added
-        {% elseif nav == 6 %}tag added
-        {% elseif nav == 10 %}post was modified
-        {% endif %}</h3>
+    <h3>{{ msg }}</h3>
     <hr>
 {% endblock %}

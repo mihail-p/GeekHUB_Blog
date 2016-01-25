@@ -42,6 +42,7 @@ class PostController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($post);
             $em->flush();
+            $msg = 'post added';
 
             return $this->render(':blog/Admin:addItemOk.html.twig', ['msg' => $msg]);
         }
@@ -88,8 +89,9 @@ class PostController extends Controller
 
             if ($form->isValid()) {
                 $em->flush();
+                $msg = 'post was modified';
 
-                return $this->redirectToRoute('admPostList');
+                return $this->redirectToRoute('admPostList', ['msg' => $msg]);
             }
         }
         return $this->render(':blog/Admin:addItem.html.twig',
