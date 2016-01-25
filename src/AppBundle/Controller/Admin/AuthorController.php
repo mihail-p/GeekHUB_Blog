@@ -34,18 +34,18 @@ class AuthorController extends Controller
            // ->add('DateTime', DateTimeType::class)
             ->add('Add', SubmitType::class)
             ->getForm();
+        $msg = 'Add author';
         $form->handleRequest($request);
-        $nav = 2;
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($author);
             $em->flush();
-
-            return $this->render(':blog/Admin:addItemOk.html.twig', ['nav' => $nav]);
+            $msg = 'author added';
+            return $this->render(':blog/Admin:addItemOk.html.twig', ['msg' => $msg]);
         }
 
         return $this->render(':blog/Admin:addItem.html.twig', [
-            'form' => $form->createView(), 'nav' => $nav
+            'form' => $form->createView(), 'msg' => $msg
         ]);
     }
     /**
@@ -56,11 +56,8 @@ class AuthorController extends Controller
         $em = $this->getDoctrine()->getManager();
         $listObj = $em->getRepository('AppBundle:Author')
             ->getAllAuthors();
-        $nav = 3;
 
-        return $this->render(':blog/Admin:listAuthor.html.twig', [
-            'listObj' => $listObj, 'nav' => $nav
-        ]);
+        return $this->render(':blog/Admin:listAuthor.html.twig', ['listObj' => $listObj]);
     }
 
 }

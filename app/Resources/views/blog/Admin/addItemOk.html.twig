@@ -1,6 +1,6 @@
 {% extends ':blog/Admin:index.html.twig' %}
 {% block blog_Post %}
-    <h3>{% if nav == 2 %}author added
+    <h3>{{ msg }}
         {% elseif nav == 4 %}post added
         {% elseif nav == 6 %}tag added
         {% elseif nav == 10 %}post was modified

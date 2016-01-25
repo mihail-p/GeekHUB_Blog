@@ -37,17 +37,17 @@ class TagController extends Controller
         $form->add('add tag', SubmitType::class);
 
         $form->handleRequest($request);
-        $nav = 6;
+        $msg = 'Add tag';
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($tag);
             $em->flush();
 
-            return $this->render(':blog/Admin:addItemOk.html.twig', ['nav' => $nav]);
+            return $this->render(':blog/Admin:addItemOk.html.twig', ['msg' => $msg]);
         }
 
         return $this->render(':blog/Admin:addItem.html.twig', [
-            'form' => $form->createView(), 'nav' => $nav
+            'form' => $form->createView(), 'msg' => $msg
         ]);
     }
     /**

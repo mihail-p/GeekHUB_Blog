@@ -37,17 +37,17 @@ class PostController extends Controller
         $form->add('add post', SubmitType::class);
 
         $form->handleRequest($request);
-        $nav = 4;
+        $msg = 'Add post';
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($post);
             $em->flush();
 
-            return $this->render(':blog/Admin:addItemOk.html.twig', ['nav' => $nav]);
+            return $this->render(':blog/Admin:addItemOk.html.twig', ['msg' => $msg]);
         }
 
         return $this->render(':blog/Admin:addItem.html.twig', [
-            'form' => $form->createView(), 'nav' => $nav
+            'form' => $form->createView(), 'msg' => $msg
         ]);
     }
     /**
@@ -57,7 +57,6 @@ class PostController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $listObj = $em->getRepository('AppBundle:Post')->getPosts();
-        $nav = 9;
 
         $deleteForms = [];
         foreach ($listObj as $entity) {
@@ -69,7 +68,7 @@ class PostController extends Controller
         }
 
         return $this->render(':blog/Admin:admListPosts.html.twig', [
-            'listObj' => $listObj, 'nav' => $nav, 'delForms' => $deleteForms
+            'listObj' => $listObj, 'delForms' => $deleteForms
         ]);
     }
     /**
@@ -82,7 +81,7 @@ class PostController extends Controller
         $postObj = $em->getRepository('AppBundle:Post')->find($id);
         $form = $this->createForm(PostAddType::class, $postObj);
         $form->add('modify', SubmitType::class);
-        $nav = 10;
+        $msg = 'Edit post';
 
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
@@ -94,7 +93,7 @@ class PostController extends Controller
             }
         }
         return $this->render(':blog/Admin:addItem.html.twig',
-            ['form' => $form->createView(),'nav' => $nav]);
+            ['form' => $form->createView(),'msg' => $msg]);
     }
     /**
      * Deletes a Post entity.

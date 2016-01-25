@@ -18,9 +18,7 @@ class BlogController extends Controller
     public function indexAction(Request $request)
     {
         // replace this example code with whatever you need
-        $nav = 1;
-        return $this->render('blog/index.html.twig', ['nav' => $nav
-        ]);
+        return $this->render('blog/index.html.twig');
     }
 
     /**
@@ -29,9 +27,7 @@ class BlogController extends Controller
     public function listAdminAction(Request $request)
     {
         // replace this example code with whatever you need
-        $nav = 8;
-        return $this->render(':blog/Admin:index.html.twig', ['nav' => $nav
-        ]);
+        return $this->render(':blog/Admin:index.html.twig');
     }
 
     /**
@@ -46,10 +42,9 @@ class BlogController extends Controller
         $this->shortPost($listObj);
         $this->shortComment($listComm);
         $sortTS = $this->sortTotalScore($listObj);
-        $nav = 5;
 
-        return $this->render(':blog:listPosts.html.twig', ['listObj' => $listObj, 'nav' => $nav,
-            'countTag' => $countTag, 'listComm' => $listComm, 'sortTotalScore' => $sortTS
+        return $this->render(':blog:listPosts.html.twig', ['listObj' => $listObj, 'countTag' => $countTag,
+            'listComm' => $listComm, 'sortTotalScore' => $sortTS
         ]);
     }
 
@@ -61,10 +56,8 @@ class BlogController extends Controller
         $listObj = $this->getDoctrine()->getRepository('AppBundle:Post')->getPostsWithTag($tag);
         $countTag = $this->countTag($listObj);
         $this->shortPost($listObj);
-        $nav = 5;
 
-        return $this->render(':blog:listPosts.html.twig', ['listObj' => $listObj, 'nav' => $nav,
-            'countTag' => $countTag]);
+        return $this->render(':blog:listPosts.html.twig', ['listObj' => $listObj, 'countTag' => $countTag]);
     }
 
     /**
@@ -85,7 +78,6 @@ class BlogController extends Controller
         $post = $em->getRepository('AppBundle:Post')->findOneBy(['slug' => $slug]);
         $countTag = $this->countTag($post);
         $comment->setPost($post);
-        $nav = 0;
 
         if ($form->isValid()) {
             /* calc and persist totalScore from comments */
@@ -109,11 +101,11 @@ class BlogController extends Controller
             $em->persist($comment);
             $em->flush();
 
-            return $this->render(':blog:addCommentOk.html.twig', ['nav' => $nav, 'comment' => $comment]);
+            return $this->render(':blog:addCommentOk.html.twig', ['comment' => $comment]);
         }
 
-        return $this->render(':blog:listOnePost.html.twig', ['post' => $post, 'nav' => $nav,
-            'countTag' => $countTag, 'form' => $form->createView()
+        return $this->render(':blog:listOnePost.html.twig', ['post' => $post, 'countTag' => $countTag,
+            'form' => $form->createView()
         ]);
     }
 
@@ -125,9 +117,8 @@ class BlogController extends Controller
         $query = $request->get('query');
         $em = $this->getDoctrine()->getManager();
         $listObj = $em->getRepository('AppBundle:Post')->search($query);
-        $nav = 9;
 
-        return $this->render(':blog:listPosts.html.twig', ['listObj' => $listObj, 'nav' => $nav, 'query' => $query]);
+        return $this->render(':blog:listPosts.html.twig', ['listObj' => $listObj, 'query' => $query]);
 
     }
 

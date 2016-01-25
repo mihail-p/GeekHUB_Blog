@@ -1,14 +1,13 @@
 {% extends 'blog.base.html.twig' %}
 {% block nav %}
-    <a class="blog-nav-item {% if nav == 1 %}active{% endif %}" href="{{ path('indexBlog') }}">Home</a>
-    <a class="blog-nav-item {% if nav == 8 %}active{% endif %}" href="{{ path('adminBlog') }}">Admin</a>
-    <a class="blog-nav-item {% if nav == 2 %}active{% endif %}" href="{{ path('authorAdd') }}">Author
+    <a class="blog-nav-item {{ 'index' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('indexBlog') }}">Home</a>
+    <a class="blog-nav-item {{ 'adminB' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('adminBlog') }}">Admin</a>
+    <a class="blog-nav-item {{ 'authorA' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('authorAdd') }}">Author
         add</a>
-    <a class="blog-nav-item {% if nav == 3 %}active{% endif %}" href="{{ path('authorList') }}">Author
+    <a class="blog-nav-item {{ 'authorL' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('authorList') }}">Author
         List</a>
-    <a class="blog-nav-item {% if nav == 4 %}active{% endif %}" href="{{ path('postAdd') }}">New
-        post</a>
-    <a class="blog-nav-item {% if nav == 9 %}active{% endif %}" href="{{ path('admPostList') }}">admPosts</a>
-    <a class="blog-nav-item {% if nav == 6 %}active{% endif %}" href="{{ path('tagAdd') }}">New tag</a>
-    <a class="blog-nav-item {% if nav == 7 %}active{% endif %}" href="{{ path('tagList') }}">Tags</a>
+    <a class="blog-nav-item {{ 'postA' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('postAdd') }}">New post</a>
+    <a class="blog-nav-item {{ 'admP' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('admPostList') }}">admPosts</a>
+    <a class="blog-nav-item {{ 'tagA' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('tagAdd') }}">New tag</a>
+    <a class="blog-nav-item {{ 'tagL' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('tagList') }}">Tags</a>
 {% endblock nav %}

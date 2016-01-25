@@ -2,7 +2,7 @@
 {% block posts %}
 
     {#--- search block ---#}
-    {% if nav == 9 %}
+    {% if 'search' in app.request.get('_route') %}
         <h3>You search: <b>{{ query }}</b></h3>
         <hr>
         {% if listObj == null %}<h3>No Results</h3>{% endif %}<br>
@@ -36,7 +36,7 @@
             <img class=" img-thumbnail" src="{{ asset('img/programming.jpg') | imagine_filter('thumb_160') }}"/>
             <div class="clearfix">
                 {{ post.post | nl2br }}
-                {% if post.post|length >299 and nav != 0 %}...
+                {% if post.post|length >299 %}...
                     <a href="{{ path('showOnePost', {'slug': post.slug }) }}">read more</a>
                 {% endif %}
             </div>

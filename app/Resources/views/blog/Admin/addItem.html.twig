@@ -1,11 +1,6 @@
 {% extends ':blog/Admin:index.html.twig' %}
 {% block blog_Post %}
-    <h3> {% if nav == 2 %}Add author
-        {% elseif nav == 4 %}Add post
-        {% elseif nav == 6 %}Add tag
-        {% elseif nav == 10 %}Edit post
-        {% endif %}
-        :</h3>
+    <h3> {{ msg }} :</h3>
     <hr>
     {{ form_start(form) }}
     {{ form_widget(form) }}
