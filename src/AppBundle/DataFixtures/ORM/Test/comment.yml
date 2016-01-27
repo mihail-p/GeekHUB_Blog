@@ -1,0 +1,29 @@
+AppBundle\Entity\Comment:
+    comment1:
+        dateTime: <dateTime($max = 'now')>
+        comment: <text(50)>
+        score: <numberBetween($min = 0, $max = 5)>
+        author: '@author1'
+        post: '@post1'
+
+    comment2:
+        dateTime: <dateTime($max = 'now')>
+        comment: <text(50)>
+        score: <numberBetween($min = 0, $max = 5)>
+        author: '@author1'
+        post: '@post1'
+
+    comment3:
+        dateTime: <dateTime($max = 'now')>
+        comment: <text(50)>
+        score: <numberBetween($min = 0, $max = 5)>
+        author: '@author2'
+        post: '@post2'
+
+    comment4:
+        dateTime: <dateTime($max = 'now')>
+        comment: <text(50)>
+        score: <numberBetween($min = 0, $max = 5)>
+        author: '@author3'
+        post: '@post3'
+

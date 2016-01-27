@@ -1,0 +1,25 @@
+AppBundle\Entity\Author:
+    author1:
+        author: Petrov0
+        passw: 35dfgd55
+        dateTime: <dateTime($max = 'now')>
+
+    author2:
+        author: Petrov1
+        passw: 3fth56d55
+        dateTime: <dateTime($max = 'now')>
+
+    author3:
+        author: Petrov2
+        passw: rty45gd55
+        dateTime: <dateTime($max = 'now')>
+
+    author4:
+        author: Petrov3
+        passw: sdf3gd55
+        dateTime: <dateTime($max = 'now')>
+
+    author5:
+        author: Petrov4
+        passw: 35ddfg3
+        dateTime: <dateTime($max = 'now')>

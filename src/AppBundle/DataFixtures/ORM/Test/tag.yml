@@ -1,0 +1,34 @@
+AppBundle\Entity\Tag:
+    tag1:
+        tag: home
+
+    tag2:
+        tag: bananas
+
+
+    tag3:
+        tag: fruits
+
+
+    tag4:
+        tag: post
+
+
+    tag5:
+        tag: tag1
+
+
+    tag6:
+        tag: route
+
+
+    tag7:
+        tag: symfony
+
+
+    tag8:
+        tag: php
+
+
+    tag9:
+        tag: lemon

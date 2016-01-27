@@ -1,0 +1,30 @@
+AppBundle\Entity\Post:
+    post1:
+        __construct: false
+        author: '@author1'
+        title: title_1
+        slug: <title-one
+        dateTime: <dateTime($max = 'now')>
+        totalScore: <numberBetween($min = 0, $max = 5)>
+        post: <text(700)>
+        tags: ['@tag1', '@tag2']
+
+    post2:
+        __construct: false
+        author: '@author2'
+        title: title_2
+        slug: <title-two
+        dateTime: <dateTime($max = 'now')>
+        totalScore: <numberBetween($min = 0, $max = 5)>
+        post: <text(700)>
+        tags: ['@tag3', '@tag4']
+
+    post3:
+        __construct: false
+        author: '@author3'
+        title: title_3
+        slug: <title-three
+        dateTime: <dateTime($max = 'now')>
+        totalScore: <numberBetween($min = 0, $max = 5)>
+        post: <text(700)>
+        tags: ['@tag1', '@tag3']
