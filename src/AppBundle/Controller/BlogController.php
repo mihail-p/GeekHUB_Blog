@@ -38,13 +38,14 @@ class BlogController extends Controller
         $em = $this->getDoctrine()->getManager();
         $listObj = $em->getRepository('AppBundle:Post')->getPosts();
         $listComm = $em->getRepository('AppBundle:Comment')->getLastComments(5);
-        $countTag = $this->countTag($listObj);
-        $this->shortPost($listObj);
-        $this->shortComment($listComm);
-        $sortTS = $this->sortTotalScore($listObj);
+
+        $countTag = $this->get('app.manager')->countTag($listObj);
+        $this->get('app.manager')->shortPost($listObj);
+        $this->get('app.manager')->shortComment($listComm);
+        $PopularPosts = $this->get('app.manager')->sortPopularPosts($listObj);
 
         return $this->render(':blog:listPosts.html.twig', ['listObj' => $listObj, 'countTag' => $countTag,
-            'listComm' => $listComm, 'sortTotalScore' => $sortTS
+            'listComm' => $listComm, 'PopularPosts' => $PopularPosts
         ]);
     }
 
@@ -54,8 +55,8 @@ class BlogController extends Controller
     public function postsWithTagAction($tag)
     {
         $listObj = $this->getDoctrine()->getRepository('AppBundle:Post')->getPostsWithTag($tag);
-        $countTag = $this->countTag($listObj);
-        $this->shortPost($listObj);
+        $countTag = $this->get('app.manager')->countTag($listObj);;
+        $this->get('app.manager')->shortPost($listObj);
 
         return $this->render(':blog:listPosts.html.twig', ['listObj' => $listObj, 'countTag' => $countTag]);
     }
@@ -68,7 +69,6 @@ class BlogController extends Controller
         $comment = new Comment();
         $comment->setDateTime(new \DateTime());
 
-
         $form = $this->createForm(new CommentAddType(), $comment);
         $form->add('add comment', SubmitType::class);
 
@@ -76,27 +76,11 @@ class BlogController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $post = $em->getRepository('AppBundle:Post')->findOneBy(['slug' => $slug]);
-        $countTag = $this->countTag($post);
+        $countTag = $this->get('app.manager')->countTag($post);
         $comment->setPost($post);
 
         if ($form->isValid()) {
-            /* calc and persist totalScore from comments */
-            $comments = $post->getComments()->getValues();
-            $ammComments = $post->getComments()->count();
-            if ($ammComments == 0) { /* div. by zero */
-                $ammComments = 1;
-            } else {
-                $ammComments++;/* because current! comment*/
-            }
-            $sumScore = 0;
-            foreach ($comments as $item) {
-                $number = $item->getscore();
-                $sumScore = $sumScore + $number;
-            }
-            $sumScore = $sumScore + $comment->getScore();
-            $totalScore = round($sumScore / $ammComments);
-            $post->setTotalScore($totalScore);
-            /* end total comments */
+            $this->get('app.manager')->calcTotalScore($post, $comment);
 
             $em->persist($comment);
             $em->flush();
@@ -120,65 +104,5 @@ class BlogController extends Controller
 
         return $this->render(':blog:listPosts.html.twig', ['listObj' => $listObj, 'query' => $query]);
 
-    }
-
-    private function countTag($listPosts)
-    {
-        $tags = [];
-        $tagEl = [];
-        $i = 1;
-        foreach ($listPosts as $posts) {
-            $tags[$posts->getId()] = $posts->getTags()->getValues();
-        }
-        foreach ($tags as $tag_name) {
-            foreach ($tag_name as $item) {
-                $tagEl[$i] = $item->getTag();
-                $i++;
-            }
-        }
-        $countTag = array_count_values($tagEl);
-        return $countTag;
-    }
-
-    private function shortPost($listObj)
-    {
-        foreach ($listObj as $post) {
-            $item = $post->getPost();
-            $string = mb_substr($item, 0, 300, 'UTF-8');
-            $post->setPost($string);
-        }
-        return $listObj;
-    }
-
-    private function shortComment($listObj)
-    {
-        foreach ($listObj as $comm) {
-            $item = $comm->getComment();
-            if (mb_strlen($item, 'UTF-8') > 30){
-                $string = mb_substr($item, 0, 30, 'UTF-8').'...';
-                $comm->setComment($string);
-            }
-        }
-        return $listObj;
-    }
-
-    private function sortTotalScore( $listObj)
-    {
-        $arrTitle =[];
-        foreach($listObj as $post){
-            $slug = $post->getSlug();
-            $title = $post->getTitle();
-            $arrTitle[$slug] = $title;
-            $arr[$slug] = $post->getTotalScore();
-        }
-        arsort($arr);
-        $sortArr = array_slice($arr, 0, 5, true);
-        /* replace totalScore to title  */
-        foreach ($arrTitle as $key => $value) {
-            foreach($sortArr as $sortKey => $sortValue){
-                if($sortKey == $key){$sortArr[$sortKey] = $value;}
-            }
-        }
-        return $sortArr;
     }
 }

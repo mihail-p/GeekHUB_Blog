@@ -25,11 +25,11 @@
 {% endif %}
 
 {#--- Popular posts ---#}
-{% if sortTotalScore is defined %}
+{% if PopularPosts is defined %}
 <div class="sidebar-module sidebar-module-inset">
     <h4>5 popular Posts:</h4>
     <ul>
-        {% for key, value in sortTotalScore %}
+        {% for key, value in PopularPosts %}
             <li>
                 <a href="{{ path('showOnePost', {'slug': key}) }}">{{ value }}</a>
             </li>
