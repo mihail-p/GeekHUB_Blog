@@ -14,5 +14,8 @@
                 <argument>%textsent%</argument>
             </call>
         </service>
+        <service id="app.twig.big_char" class="AppBundle\TwigExt\BigChar">
+            <tag name="twig.extension" />
+        </service>
     </services>
 </container>

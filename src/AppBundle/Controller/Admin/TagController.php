@@ -59,11 +59,9 @@ class TagController extends Controller
         $em = $this->getDoctrine()->getManager();
         $listObj = $em->getRepository('AppBundle:Tag')
             ->findAll();
-        $nav = 7;
 
         return $this->render(':blog/Admin:listTags.html.twig', [
-            'listObj' => $listObj, 'nav' => $nav
+            'listObj' => $listObj
         ]);
     }
-
 }
