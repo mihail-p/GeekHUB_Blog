@@ -33,7 +33,7 @@ class TagController extends Controller
         $tag = new Tag();
         $tag->setTag('name of tag here');
 
-        $form = $this->createForm(new TagType(), $tag);
+        $form = $this->createForm(TagType::class, $tag);
         $form->add('add tag', SubmitType::class);
 
         $form->handleRequest($request);

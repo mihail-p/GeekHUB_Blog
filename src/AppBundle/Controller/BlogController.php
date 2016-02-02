@@ -69,7 +69,7 @@ class BlogController extends Controller
         $comment = new Comment();
         $comment->setDateTime(new \DateTime());
 
-        $form = $this->createForm(new CommentAddType(), $comment);
+        $form = $this->createForm(CommentAddType::class, $comment);
         $form->add('add comment', SubmitType::class);
 
         $form->handleRequest($request);
