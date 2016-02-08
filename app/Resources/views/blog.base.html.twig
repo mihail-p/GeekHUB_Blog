@@ -36,6 +36,8 @@
                     <a class="blog-nav-item {{ 'author' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('authorList') }}">Author
                         List</a>
                     <a class="blog-nav-item {{ 'posts' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('postsList') }}">Posts</a>
+                    <a class="blog-nav-item {{ 'login' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('loginUser') }}">Login</a>
+                    <a class="blog-nav-item {{ 'Registration' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('user_registration') }}">Registration</a>
                 {% endblock nav %}
             </nav>
         </div>

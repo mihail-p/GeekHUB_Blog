@@ -20,6 +20,42 @@ use Symfony\Component\HttpFoundation\Request;
 class AuthorController extends Controller
 {
     /**
+     * @Route("/login", name="loginUser")
+     */
+    public function loginAction(Request $request)
+    {
+        $author = new Author();
+        $form = $this->createFormBuilder($author)
+            ->setAction($this->generateUrl('loginCheck'))
+            ->setMethod('Post')
+            ->add('Author', TextType::class)
+            ->add('Passw', PasswordType::class)
+            ->add('Login', SubmitType::class)
+            ->getForm();
+
+        $authenticationUtils = $this->get('security.authentication_utils');
+
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render(':blog:loginForm.html.twig', [
+            'form' => $form->createView(),
+            'last_username' => $lastUsername,
+            'error' => $error,
+        ]);
+    }
+
+    /**
+     * @Route("/login_check", name="loginCheck")
+     */
+    public function checkLoginAction()
+    {
+
+    }
+    /**
      * @Route("/authorAdd", name="authorAdd")
      */
     public function addAction(Request $request)

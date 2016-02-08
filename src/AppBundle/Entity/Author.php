@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Author
@@ -10,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="author")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AuthorRepository")
  */
-class Author
+class Author implements UserInterface, \Serializable
 {
     /**
      * @var int
@@ -24,16 +26,22 @@ class Author
     /**
      * @var string
      *
-     * @ORM\Column(name="Author", type="string", length=30)
+     * @ORM\Column(name="Username", type="string", length=30)
      */
-    private $author;
+    private $username;
+
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max = 4096)
+     */
+    private $plainPassword;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="Passw", type="string", length=255, unique=true)
+     * @ORM\Column(name="Password", type="string", length=255, unique=true)
      */
-    private $passw;
+    private $password;
 
     /**
      * @var \DateTime
@@ -56,13 +64,13 @@ class Author
     /**
      * Set author
      *
-     * @param string $author
+     * @param string $user
      *
      * @return Author
      */
-    public function setAuthor($author)
+    public function setUsername($user)
     {
-        $this->author = $author;
+        $this->username = $user;
 
         return $this;
     }
@@ -72,9 +80,19 @@ class Author
      *
      * @return string
      */
-    public function getAuthor()
+    public function getUsername()
     {
-        return $this->author;
+        return $this->username;
+    }
+
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($password)
+    {
+        $this->plainPassword = $password;
     }
 
     /**
@@ -84,9 +102,9 @@ class Author
      *
      * @return Author
      */
-    public function setPassw($passw)
+    public function setPassword($passw)
     {
-        $this->passw = $passw;
+        $this->password = $passw;
 
         return $this;
     }
@@ -96,9 +114,9 @@ class Author
      *
      * @return string
      */
-    public function getPassw()
+    public function getPassword()
     {
-        return $this->passw;
+        return $this->password;
     }
 
     /**
@@ -123,5 +141,46 @@ class Author
     public function getDateTime()
     {
         return $this->dateTime;
+    }
+
+
+    public function getSalt()
+    {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
+    }
+
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+            ) = unserialize($serialized);
     }
 }

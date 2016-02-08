@@ -4,8 +4,14 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory: ~
+        our_db_provider:
+            entity:
+                class: AppBundle:Author
+                property: username
+    encoders:
+        AppBundle\Entity\Author:
+            algorithm: bcrypt
+            cost: 12
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -14,11 +20,21 @@ security:
             security: false
 
         main:
+            pattern: ^/admin
+            http_basic: ~
             anonymous: ~
+            #form_login:
+             #   login_path: /login
+              #  check_path: /login_check
             # activate different ways to authenticate
+            provider: our_db_provider
 
-            # http_basic: ~
+
+
+
             # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
 
             # form_login: ~
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+    access_control:
+            - { path: ^/admin, roles: ROLE_ADMIN }
