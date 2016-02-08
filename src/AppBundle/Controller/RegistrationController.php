@@ -44,4 +44,5 @@ class RegistrationController extends Controller
             array('form' => $form->createView())
         );
     }
+
 }

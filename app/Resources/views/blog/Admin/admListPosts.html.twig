@@ -23,7 +23,7 @@
                     <td>{{ loop.index }}</td>
                     <td>{{ post.title }}</td>
                     <td>{{ post.dateTime|date }}</td>
-                    <td>{{ post.author.author }}</td>
+                    <td>{{ post.author.username }}</td>
                     <td>
                         {% for tag_name in post.tags %}
                             {% if not loop.last %}

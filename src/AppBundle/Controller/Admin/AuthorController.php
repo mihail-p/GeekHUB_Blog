@@ -20,19 +20,19 @@ use Symfony\Component\HttpFoundation\Request;
 class AuthorController extends Controller
 {
     /**
-     * @Route("/login", name="loginUser")
+     * @Route("/login1", name="loginUser")
      */
     public function loginAction(Request $request)
     {
-        $author = new Author();
-        $form = $this->createFormBuilder($author)
-            ->setAction($this->generateUrl('loginCheck'))
-            ->setMethod('Post')
-            ->add('Author', TextType::class)
-            ->add('Passw', PasswordType::class)
-            ->add('Login', SubmitType::class)
-            ->getForm();
-
+        /*  $author = new Author();
+          $form = $this->createFormBuilder($author)
+              ->setAction($this->generateUrl('loginUser'))
+              ->setMethod('Post')
+              ->add('Username', TextType::class)
+              ->add('Password', PasswordType::class)
+              ->add('Login', SubmitType::class)
+              ->getForm();
+       */
         $authenticationUtils = $this->get('security.authentication_utils');
 
         // get the login error if there is one
@@ -42,31 +42,24 @@ class AuthorController extends Controller
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render(':blog:loginForm.html.twig', [
-            'form' => $form->createView(),
+           /* 'form' => $form->createView(), */
             'last_username' => $lastUsername,
             'error' => $error,
         ]);
     }
 
     /**
-     * @Route("/login_check", name="loginCheck")
-     */
-    public function checkLoginAction()
-    {
-
-    }
-    /**
      * @Route("/authorAdd", name="authorAdd")
      */
     public function addAction(Request $request)
     {
         $author = new Author();
-        $author->setAuthor('Author1');
+        $author->setUsername('Author1');
         $author->setDateTime(new \DateTime());
 
         $form = $this->createFormBuilder($author)
-            ->add('Author', TextType::class)
-            ->add('Passw', PasswordType::class)
+            ->add('Username', TextType::class)
+            ->add('Password', PasswordType::class)
            // ->add('DateTime', DateTimeType::class)
             ->add('Add', SubmitType::class)
             ->getForm();
@@ -89,11 +82,20 @@ class AuthorController extends Controller
      */
     public function listAction()
     {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $user = $this->getUser();
+
+        // the above is a shortcut for this
+        // $user = $this->get('security.token_storage')->getToken()->getUser();
+
         $em = $this->getDoctrine()->getManager();
         $listObj = $em->getRepository('AppBundle:Author')
             ->getAllAuthors();
 
-        return $this->render(':blog/Admin:listAuthor.html.twig', ['listObj' => $listObj]);
+        return $this->render(':blog/Admin:listAuthor.html.twig', ['listObj' => $listObj, 'user' => $user]);
     }
 
 }

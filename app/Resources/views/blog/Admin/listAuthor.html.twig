@@ -1,5 +1,8 @@
 {% extends 'blog.base.html.twig' %}
 {% block blog_Post %}
+    {% if user is defined %}
+    {{ dump(user) }}
+        {% endif %}
     <h3>List Authors:</h3>
     <hr>
     <table class="table">
@@ -7,8 +10,8 @@
     {% for author in listObj %}
         <tr>
             <td>{{ loop.index }}. </td>
-            <td>{{ author.author }}</td>
-            <td>{{ author.passw }}</td>
+            <td>{{ author.username }}</td>
+            <td>{{ author.password }}</td>
             <td>{{ author.dateTime|date }}</td>
         </tr>
         {% endfor %}
