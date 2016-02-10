@@ -1,0 +1,7 @@
+{% extends ':blog/Admin:index.html.twig' %}
+{% block blog_Post %}
+    <h4>Your comment:</h4>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

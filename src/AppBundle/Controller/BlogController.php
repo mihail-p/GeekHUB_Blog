@@ -69,10 +69,14 @@ class BlogController extends Controller
         $comment = new Comment();
         $comment->setDateTime(new \DateTime());
 
+        $comment->setAuthor($this->getUser());
+
         $form = $this->createForm(CommentAddType::class, $comment);
         $form->add('add comment', SubmitType::class);
 
-        $form->handleRequest($request);
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $form->handleRequest($request);
+        }
 
         $em = $this->getDoctrine()->getManager();
         $post = $em->getRepository('AppBundle:Post')->findOneBy(['slug' => $slug]);

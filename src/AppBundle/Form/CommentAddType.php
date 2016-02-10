@@ -14,9 +14,10 @@ class CommentAddType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('author', EntityType::class, [
+           /* ->add('author', EntityType::class, [
                 'class' => 'AppBundle\Entity\Author',
                 'choice_label' => 'username'])
+           */
             ->add('score', ChoiceType::class, [
                 'choices' => [
                     'one' => 1,

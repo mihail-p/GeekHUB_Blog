@@ -6,40 +6,41 @@
 
     {#--- block post ---#}
 
-        <div class="blog-post">
-            <h2 class="blog-post-title">
-                {{ post.title }}
-            </h2>
-            <p class="blog-post-meta">
-                {% if post.totalScore > 0 %}
-                    <span class="glyphicon glyphicon-star text-warning" aria-hidden="true" title="rating"></span>
-                    <span id="rating" title="rating">{{ post.totalScore }}</span>
-                {% endif %}
-                {{ post.dateTime|date }} by <a href="#">{{ post.author.username }}</a>
-            </p>
-            {% if post.tags is not empty %}
-                <span class="glyphicon glyphicon-tag"></span>
-                {% for tag_name in post.tags %}
-                    <a class="label label-default"
-                            {#href="{{ path('postsWithTag', {'tag': tag_name.tag}) }}"#}>
-                        {{ tag_name.tag }}
-                    </a>
-                {% endfor %}
+    <div class="blog-post">
+        <h2 class="blog-post-title">
+            {{ post.title }}
+        </h2>
+        <p class="blog-post-meta">
+            {% if post.totalScore > 0 %}
+                <span class="glyphicon glyphicon-star text-warning" aria-hidden="true" title="rating"></span>
+                <span id="rating" title="rating">{{ post.totalScore }}</span>
             {% endif %}
-            {#{% set runtimeConfig = {"thumbnail": {"size": [160, 110] }} %}#}
-            <div>
-                <img class=" img-thumbnail" src="{{ asset('img/programming.jpg') | imagine_filter('thumb_300') }}" />
-                <p>{{ big_char(post.post) | nl2br }}</p>
-                <p class="clear clearfix"></p>
+            {{ post.dateTime|date }} by <a href="#">{{ post.author.username }}</a>
+        </p>
+        {% if post.tags is not empty %}
+            <span class="glyphicon glyphicon-tag"></span>
+            {% for tag_name in post.tags %}
+                <a class="label label-default"
+                        {#href="{{ path('postsWithTag', {'tag': tag_name.tag}) }}"#}>
+                    {{ tag_name.tag }}
+                </a>
+            {% endfor %}
+        {% endif %}
+        {#{% set runtimeConfig = {"thumbnail": {"size": [160, 110] }} %}#}
+        <div>
+            <img class=" img-thumbnail" src="{{ asset('img/programming.jpg') | imagine_filter('thumb_300') }}"/>
+            <p>{{ big_char(post.post) | nl2br }}</p>
+            <p class="clear clearfix"></p>
             <hr>
-            </div>
         </div>
+    </div>
     {#--- Comments ---#}
     <div class="media">
         <div class="media-body">
             <h3 class="media-heading">Comments:</h3>
             <span class="glyphicon glyphicon-comment"></span><br>
             {% for item in post.comments %}
+
                 <div class="media-left">
                     <span class="blog-description">score:</span> {{ item.score }},
                     <span class="blog-description">author: </span> {{ item.author.username }}
@@ -47,7 +48,14 @@
                 <div class="media-right">
                     <p>
                         <span class="blog-description ">date: </span>
-                        <span>{{ item.author.dateTime | date }}</span>
+                        <span>{{ item.dateTime | date }}</span>
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            {% if app.user.username == item.author.username %}
+                                <a class="glyphicon glyphicon-pencil" title="edit comment"
+                                   href="{{ path('commentEdit', {'id':item.id}) }}"></a>
+                            {% endif %}
+                        {% endif %}
+
                     </p>
                 </div>
                 <div class="alert alert-info">
@@ -57,12 +65,17 @@
         </div>
     </div>
     <div class="media">
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <div class="media-body">
-            <h4>Your comment:</h4>
+        user: "{{ app.user.username }}"
+            <h4>Your score and comment:</h4>
             {{ form_start(form) }}
             {{ form_widget(form) }}
             {{ form_end(form) }}
         </div>
+        {% else %}
+        <p>Your are not correct login and can't put comments!</p>
+        {% endif %}
     </div>
     {#--- end Comments ---#}
     {#--- end block post ---#}
