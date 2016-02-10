@@ -17,6 +17,7 @@ class RegistrationController extends Controller
     {
         // 1) build the form
         $user = new Author();
+        $user->setRole('ROLE_USER');
         $user->setDateTime(new \DateTime());
         $form = $this->createForm(AuthorType::class, $user);
 

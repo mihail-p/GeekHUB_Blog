@@ -26,7 +26,7 @@ class Author implements UserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="Username", type="string", length=30)
+     * @ORM\Column(name="Username", type="string", length=30, unique=true)
      */
     private $username;
 
@@ -50,6 +50,11 @@ class Author implements UserInterface, \Serializable
      */
     private $dateTime;
 
+    /**
+     * @var string
+     * @ORM\Column(name="Role", type="string", length=30)
+     */
+    private $role;
 
     /**
      * Get id
@@ -151,9 +156,19 @@ class Author implements UserInterface, \Serializable
         return null;
     }
 
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return [$this->getRole()];
     }
 
     public function eraseCredentials()

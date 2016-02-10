@@ -15,7 +15,7 @@
                     <span class="glyphicon glyphicon-star text-warning" aria-hidden="true" title="rating"></span>
                     <span id="rating" title="rating">{{ post.totalScore }}</span>
                 {% endif %}
-                {{ post.dateTime|date }} by <a href="#">{{ post.author.author }}</a>
+                {{ post.dateTime|date }} by <a href="#">{{ post.author.username }}</a>
             </p>
             {% if post.tags is not empty %}
                 <span class="glyphicon glyphicon-tag"></span>
@@ -42,7 +42,7 @@
             {% for item in post.comments %}
                 <div class="media-left">
                     <span class="blog-description">score:</span> {{ item.score }},
-                    <span class="blog-description">author: </span> {{ item.author.author }}
+                    <span class="blog-description">author: </span> {{ item.author.username }}
                 </div>
                 <div class="media-right">
                     <p>

@@ -16,7 +16,7 @@ class CommentAddType extends AbstractType
         $builder
             ->add('author', EntityType::class, [
                 'class' => 'AppBundle\Entity\Author',
-                'choice_label' => 'author'])
+                'choice_label' => 'username'])
             ->add('score', ChoiceType::class, [
                 'choices' => [
                     'one' => 1,
