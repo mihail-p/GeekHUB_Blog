@@ -86,16 +86,11 @@ class AuthorController extends Controller
             throw $this->createAccessDeniedException();
         }
 
-        $user = $this->getUser();
-
-        // the above is a shortcut for this
-        // $user = $this->get('security.token_storage')->getToken()->getUser();
-
         $em = $this->getDoctrine()->getManager();
         $listObj = $em->getRepository('AppBundle:Author')
             ->getAllAuthors();
 
-        return $this->render(':blog/Admin:listAuthor.html.twig', ['listObj' => $listObj, 'user' => $user]);
+        return $this->render(':blog/Admin:listAuthor.html.twig', ['listObj' => $listObj]);
     }
 
 }

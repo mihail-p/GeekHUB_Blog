@@ -47,13 +47,11 @@
                 </div>
                 <div class="media-right">
                     <p>
-                        <span class="blog-description ">date: </span>
+                        <span class="blog-description">date: </span>
                         <span>{{ item.dateTime | date }}</span>
-                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                            {% if app.user.username == item.author.username %}
+                        {% if is_granted('edit', item) %}
                                 <a class="glyphicon glyphicon-pencil" title="edit comment"
                                    href="{{ path('commentEdit', {'id':item.id}) }}"></a>
-                            {% endif %}
                         {% endif %}
 
                     </p>
@@ -74,7 +72,7 @@
             {{ form_end(form) }}
         </div>
         {% else %}
-        <p>Your are not correct login and can't put comments!</p>
+        <p>Your are not correct login and can't post comments!</p>
         {% endif %}
     </div>
     {#--- end Comments ---#}
