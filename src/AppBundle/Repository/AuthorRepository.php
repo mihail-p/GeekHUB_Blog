@@ -17,7 +17,7 @@ class AuthorRepository extends \Doctrine\ORM\EntityRepository implements UserLoa
     public function getAllAuthors()
     {
         return $this->createQueryBuilder('a')
-            ->select('a.username', 'a.dateTime', 'a.password')
+            ->select('a.username', 'a.dateTime', 'a.role','a.password')
             ->getQuery()
             ->getResult();
     }

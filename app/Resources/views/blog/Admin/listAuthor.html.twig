@@ -1,18 +1,31 @@
-{% extends 'blog.base.html.twig' %}
+{% extends ':blog/Admin:index.html.twig' %}
 {% block blog_Post %}
-    {% if user is defined %}
-        {% endif %}
-    <h3>List Authors:</h3>
-    <hr>
-    <table class="table">
-        <thead><tr><th>#</th><th>author</th><th>passw</th><th>dateTime</th></tr></thead>
-    {% for author in listObj %}
-        <tr>
-            <td>{{ loop.index }}. </td>
-            <td>{{ author.username }}</td>
-            <td>{{ author.password }}</td>
-            <td>{{ author.dateTime|date }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+    {% if is_granted('ROLE_ADMIN') %}
+        <h3>List Authors:</h3>
+        <hr>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>author</th>
+                <th>passw</th>
+                <th>Role</th>
+                <th>dateTime</th>
+            </tr>
+            </thead>
+            {% for author in listObj %}
+                <tr>
+                    <td>{{ loop.index }}.</td>
+                    <td>{{ author.username }}</td>
+                    <td>{{ author.password }}</td>
+                    <td>{{ author.role }}</td>
+                    <td>{{ author.dateTime|date }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <div class="alert alert-danger">
+            You are not have permission to view this resource!
+        </div>
+    {% endif %}
 {% endblock %}

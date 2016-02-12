@@ -1,14 +1,25 @@
 {% extends ':blog/Admin:index.html.twig' %}
 {% block blog_Post %}
-    <h3>List Tags:</h3>
-    <hr>
-    <table class="table">
-        <thead><tr><th>#</th><th>tag name</th></tr></thead>
-    {% for tag in listObj %}
-        <tr>
-            <td>{{ loop.index }}. </td>
-            <td>{{ tag.tag }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+    {% if is_granted('ROLE_ADMIN') %}
+        <h3>List Tags:</h3>
+        <hr>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>tag name</th>
+            </tr>
+            </thead>
+            {% for tag in listObj %}
+                <tr>
+                    <td>{{ loop.index }}.</td>
+                    <td>{{ tag.tag }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <div class="alert alert-danger">
+            You are not have permission to view this resource!
+        </div>
+    {% endif %}
 {% endblock %}

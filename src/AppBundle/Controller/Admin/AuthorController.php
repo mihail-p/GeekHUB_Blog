@@ -49,35 +49,6 @@ class AuthorController extends Controller
     }
 
     /**
-     * @Route("/authorAdd", name="authorAdd")
-     */
-    public function addAction(Request $request)
-    {
-        $author = new Author();
-        $author->setUsername('Author1');
-        $author->setDateTime(new \DateTime());
-
-        $form = $this->createFormBuilder($author)
-            ->add('Username', TextType::class)
-            ->add('Password', PasswordType::class)
-           // ->add('DateTime', DateTimeType::class)
-            ->add('Add', SubmitType::class)
-            ->getForm();
-        $msg = 'Add author';
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($author);
-            $em->flush();
-            $msg = 'author added';
-            return $this->render(':blog/Admin:addItemOk.html.twig', ['msg' => $msg]);
-        }
-
-        return $this->render(':blog/Admin:addItem.html.twig', [
-            'form' => $form->createView(), 'msg' => $msg
-        ]);
-    }
-    /**
      * @Route("/authorList", name="authorList")
      */
     public function listAction()
