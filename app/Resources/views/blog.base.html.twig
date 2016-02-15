@@ -31,12 +31,12 @@
         <div class="container">
             <nav class="blog-nav">
                 {% block nav %}
-                    <a class="blog-nav-item {{ 'index' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('indexBlog') }}">Home</a>
-                    <a class="blog-nav-item {{ 'admin' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('adminBlog') }}">Admin</a>
-                    <a class="blog-nav-item {{ 'posts' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('postsList') }}">Posts</a>
-                    <a class="blog-nav-item {{ 'login' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('loginUser') }}">Login</a>
-                    <a class="blog-nav-item {{ 'Registration' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('user_registration') }}">Registration</a>
-                    <a class="blog-nav-item {{ 'Logout' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('logout') }}">Logout</a>
+                    <a class="blog-nav-item {{ 'index' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('indexBlog') }}">{% trans %}menu.home{% endtrans %}</a>
+                    <a class="blog-nav-item {{ 'admin' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('adminBlog') }}">{% trans %}menu.admin{% endtrans %}</a>
+                    <a class="blog-nav-item {{ 'posts' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('postsList') }}">{% trans %}menu.posts{% endtrans %}</a>
+                    <a class="blog-nav-item {{ 'login' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('loginUser') }}">{% trans %}menu.login{% endtrans %}</a>
+                    <a class="blog-nav-item {{ 'Registration' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('user_registration') }}">{{ 'menu.regist'|trans }}</a>
+                    <a class="blog-nav-item {{ 'Logout' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('logout') }}">{{ 'menu.logout'|trans }}</a>
                 {% endblock nav %}
             </nav>
         </div>
@@ -44,8 +44,8 @@
     <div class="container">
         {% block blogHeader %}
             <div class="blog-header">
-                <h1 class="blog-title"><a href="{{ path('postsList') }}">Symfony blog</a></h1>
-                <p class="lead blog-description">Simple blog with Bootstrap.</p>
+                <h1 class="blog-title"><a href="{{ path('postsList') }}">{{ 'main.Head'|trans }}</a></h1>
+                <p class="lead blog-description">{{ 'main.Descr'|trans }}</p>
             </div>
         {% endblock blogHeader %}
 

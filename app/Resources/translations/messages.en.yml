@@ -1,0 +1,16 @@
+menu:
+    home: Home
+    admin: Admin
+    posts: Posts
+    login: Login
+    regist: Registration
+    logout: Logout
+    userA: Author add
+    userL: Author list
+    newT: New Tag
+    tags: Tags
+    newP: New Post
+    admP: admPosts
+main:
+    Head: Symfony blog
+    Descr: Simple blog with Bootstrap.

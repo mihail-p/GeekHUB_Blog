@@ -1,0 +1,16 @@
+menu:
+    home: Додому
+    admin: Адміністрування
+    posts: Пости
+    login: Ввійти
+    regist: Реєстрація
+    logout: Вийти
+    userA: Додати автора
+    userL: Перелік авторів
+    newT: Новий ярлик
+    tags: Ярлики
+    newP: Новий пост
+    admP: Адмін Пости
+main:
+    Head: Symfony блог
+    Descr: Простий блог з Bootstrap.
