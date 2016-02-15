@@ -13,7 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class BlogController extends Controller
 {
     /**
-     * @Route("/", name="indexBlog")
+     * @Route("/{_locale}", name="indexBlog", defaults={"_locale": "uk"}, requirements={
+     *     "_locale": "%locales%"})
      */
     public function indexAction(Request $request)
     {
@@ -22,7 +23,7 @@ class BlogController extends Controller
     }
 
     /**
-     * @Route("/admin", name="adminBlog")
+     * @Route("/{_locale}/admin", name="adminBlog")
      */
     public function listAdminAction(Request $request)
     {
@@ -31,7 +32,7 @@ class BlogController extends Controller
     }
 
     /**
-     * @Route("/posts.list", name="postsList")
+     * @Route("/{_locale}/posts.list", name="postsList")
      */
     public function listPostsAction()
     {
@@ -50,7 +51,7 @@ class BlogController extends Controller
     }
 
     /**
-     * @Route("/post/tag/{tag}", name="postsWithTag")
+     * @Route("/{_locale}/post/tag/{tag}", name="postsWithTag")
      */
     public function postsWithTagAction($tag)
     {
@@ -62,7 +63,7 @@ class BlogController extends Controller
     }
 
     /**
-     * @Route("/post.show/{slug}", name="showOnePost", requirements={"slug" = "[a-z1-9\-_\/]+"})
+     * @Route("/{_locale}/post.show/{slug}", name="showOnePost", requirements={"slug" = "[a-z1-9\-_\/]+"})
      */
     public function showPostAction(Request $request, $slug)
     {
@@ -98,7 +99,7 @@ class BlogController extends Controller
     }
 
     /**
-     * @Route("/search", name="search")
+     * @Route("/{_locale}/search", name="search")
      */
     public function searchAction(Request $request)
     {

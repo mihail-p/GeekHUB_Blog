@@ -14,9 +14,9 @@ class PostAddType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('author', EntityType::class, [
+            ->add('Author', EntityType::class, [
                 'class' => 'AppBundle\Entity\Author',
-                'choice_label' => 'author'])
+                'choice_label' => 'username'])
             ->add('title', TextType::class)
             ->add('post', TextareaType::class,[
                 'attr' => array('cols' => '68', 'rows' => '10')

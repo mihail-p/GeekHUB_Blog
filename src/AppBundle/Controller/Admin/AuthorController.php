@@ -49,7 +49,8 @@ class AuthorController extends Controller
     }
 
     /**
-     * @Route("/authorList", name="authorList")
+     * @Route("/{_locale}/authorList", name="authorList", defaults={"_locale": "en"}, requirements={
+     *     "_locale": "%locales%"})
      */
     public function listAction()
     {

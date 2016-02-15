@@ -34,7 +34,7 @@
                     <a class="blog-nav-item {{ 'index' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('indexBlog') }}">{% trans %}menu.home{% endtrans %}</a>
                     <a class="blog-nav-item {{ 'admin' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('adminBlog') }}">{% trans %}menu.admin{% endtrans %}</a>
                     <a class="blog-nav-item {{ 'posts' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('postsList') }}">{% trans %}menu.posts{% endtrans %}</a>
-                    <a class="blog-nav-item {{ 'login' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('loginUser') }}">{% trans %}menu.login{% endtrans %}</a>
+                    <a class="blog-nav-item {{ 'login' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('user_login') }}">{% trans %}menu.login{% endtrans %}</a>
                     <a class="blog-nav-item {{ 'Registration' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('user_registration') }}">{{ 'menu.regist'|trans }}</a>
                     <a class="blog-nav-item {{ 'Logout' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('logout') }}">{{ 'menu.logout'|trans }}</a>
                 {% endblock nav %}

@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class PostController
- * @Route("/admin/post")
+ * @Route("/{_locale}/admin/post")
  */
 
 class PostController extends Controller
@@ -29,7 +29,7 @@ class PostController extends Controller
     public function addAction(Request $request)
     {
         $post = new Post();
-        $post->setTitle('Title_1');
+        $post->setTitle('Title name');
         $post->setDateTime(new \DateTime());
         $post->setTotalScore(0);
 

@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * Class PostController
- * @Route("/admin/comment")
+ * @Route("/{_locale}/admin/comment")
  */
 class CommentController extends Controller
 {
