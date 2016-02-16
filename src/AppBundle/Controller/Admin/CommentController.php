@@ -34,6 +34,5 @@ class CommentController extends Controller
         }
 
         return $this->render(':blog/Admin:editComment.html.twig', ['form' => $form->createView()]);
-
     }
 }

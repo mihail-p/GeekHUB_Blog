@@ -10,7 +10,7 @@ menu:
     newT: New Tag
     tags: Tags
     newP: New Post
-    admP: admPosts
+    listAdmP: admPosts
 main:
     Head: Symfony blog
     Descr: Simple blog with Bootstrap.

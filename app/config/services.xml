@@ -17,8 +17,13 @@
         <service id="app.twig.big_char" class="AppBundle\TwigExt\BigChar">
             <tag name="twig.extension" />
         </service>
-        <service id="app.post_voter"
+        <service id="app.comment_voter"
                  class="AppBundle\Security\CommentVoter"
+                 public="false" >
+            <tag name="security.voter" />
+        </service>
+        <service id="app.post_voter"
+                 class="AppBundle\Security\PostVoter"
                  public="false" >
             <tag name="security.voter" />
         </service>

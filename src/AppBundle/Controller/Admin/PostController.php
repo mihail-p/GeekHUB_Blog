@@ -28,6 +28,10 @@ class PostController extends Controller
      */
     public function addAction(Request $request)
     {
+        if (!($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') or
+            $this->get('security.authorization_checker')->isGranted('ROLE_MODERATOR'))) {
+            throw $this->createAccessDeniedException();
+        }
         $post = new Post();
         $post->setTitle('Title name');
         $post->setDateTime(new \DateTime());
@@ -51,11 +55,16 @@ class PostController extends Controller
             'form' => $form->createView(), 'msg' => $msg
         ]);
     }
+
     /**
      * @Route("/list", name="admPostList")
      */
     public function listAction()
     {
+        if (!($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') or
+            $this->get('security.authorization_checker')->isGranted('ROLE_MODERATOR'))) {
+            throw $this->createAccessDeniedException();
+        }
         $em = $this->getDoctrine()->getManager();
         $listObj = $em->getRepository('AppBundle:Post')->getPosts();
 
@@ -67,11 +76,11 @@ class PostController extends Controller
                 ->add('submit', SubmitType::class, ['label' => ' ', 'attr' => ['class' => 'glyphicon glyphicon-trash btn-link']])
                 ->getForm()->createView();
         }
-
         return $this->render(':blog/Admin:admListPosts.html.twig', [
             'listObj' => $listObj, 'delForms' => $deleteForms
         ]);
     }
+
     /**
      *@Route("/mod/{id}", name="admPostMod",
      *     requirements={"id": "\d+"})
@@ -97,6 +106,7 @@ class PostController extends Controller
         return $this->render(':blog/Admin:addItem.html.twig',
             ['form' => $form->createView(),'msg' => $msg]);
     }
+
     /**
      * Deletes a Post entity.
      *
@@ -112,6 +122,4 @@ class PostController extends Controller
 
         return $this->redirectToRoute('admPostList');
     }
-
-
 }

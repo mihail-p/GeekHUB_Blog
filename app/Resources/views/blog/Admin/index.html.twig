@@ -24,16 +24,20 @@
         <a class="blog-nav-item {{ 'tagL' in app.request.get('_route') ? 'active' : '' }}"
            href="{{ path('tagList') }}">{{ 'menu.tags'|trans }}</a>
     {% endif %}
-    <a class="blog-nav-item {{ 'postA' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('postAdd') }}">
-        {{ 'menu.newP'|trans }}
-    </a>
-    <a class="blog-nav-item {{ 'admP' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('admPostList') }}">
-        {{ 'menu.admP'|trans }}
-    </a>
+    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_MODERATOR') %}
+        <a class="blog-nav-item {{ 'postA' in app.request.get('_route') ? 'active' : '' }}"
+           href="{{ path('postAdd') }}">
+            {{ 'menu.newP'|trans }}
+        </a>
+        <a class="blog-nav-item {{ 'admP' in app.request.get('_route') ? 'active' : '' }}"
+           href="{{ path('admPostList') }}">
+            {{ 'menu.listAdmP'|trans }}
+        </a>
+    {% endif %}
     <a class="blog-nav-item {{ 'Logout' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('logout') }}">
         {{ 'menu.logout'|trans }}
     </a>
 {% endblock nav %}
 {% block blog_Post %}
-            <h3>{{ 'admin.ch.cat'|trans }}</h3>
+    <h3>{{ 'admin.ch.cat'|trans }}</h3>
 {% endblock %}

@@ -10,7 +10,7 @@ menu:
     newT: Новий ярлик
     tags: Ярлики
     newP: Нова стаття
-    admP: Редаг. статтю
+    listAdmP: Редаг. статтю
 main:
     Head: Symfony блог
     Descr: Простий блог з Bootstrap.
