@@ -27,7 +27,7 @@
 {#--- Popular posts ---#}
 {% if PopularPosts is defined %}
 <div class="sidebar-module sidebar-module-inset">
-    <h4>5 popular Posts:</h4>
+    <h4>5 {{ 'main.popular'|trans }}:</h4>
     <ul>
         {% for key, value in PopularPosts %}
             <li>
@@ -41,7 +41,7 @@
 {#--- last comments ---#}
 {% if listComm is defined %}
 <div class="sidebar-module sidebar-module-inset">
-    <h4>Last 5 comments:</h4>
+    <h4>{{ 'main.lastComm'|trans }}:</h4>
     <ul>
         {% for item in listComm %}
             <li>

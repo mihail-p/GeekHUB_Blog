@@ -1,12 +1,8 @@
 {% extends 'blog/Admin/index.html.twig' %}
-{% block blogHeader %}
-    <div class="blog-header">
-        <p class="lead blog-description">admin panel<br>Posts:</p>
-    </div>
-{% endblock %}
 
 {% block posts %}
     {#{{ dump(listObj) }}#}
+    <h3>Posts:</h3>
     <div class="blog-post">
         <table class="table">
             <tr>

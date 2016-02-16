@@ -47,9 +47,8 @@ class AuthorController extends Controller
             'error' => $error,
         ]);
     }
-
     /**
-     * @Route("/{_locale}/authorList", name="authorList", defaults={"_locale": "en"}, requirements={
+     * @Route("/{_locale}/admin/authorList", name="authorList", defaults={"_locale": "en"}, requirements={
      *     "_locale": "%locales%"})
      */
     public function listAction()
@@ -64,5 +63,4 @@ class AuthorController extends Controller
 
         return $this->render(':blog/Admin:listAuthor.html.twig', ['listObj' => $listObj]);
     }
-
 }

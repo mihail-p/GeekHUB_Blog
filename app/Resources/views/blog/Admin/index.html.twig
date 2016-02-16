@@ -1,4 +1,10 @@
 {% extends 'blog.base.html.twig' %}
+{% block blogHeader %}
+    <div class="blog-header">
+        <p class="lead blog-description">{{ 'admin.panel'|trans }}</p>
+    </div>
+{% endblock %}
+
 {% block nav %}
     <a class="blog-nav-item {{ 'index' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('indexBlog') }}">
         {% trans %}menu.home{% endtrans %}
@@ -28,3 +34,6 @@
         {{ 'menu.logout'|trans }}
     </a>
 {% endblock nav %}
+{% block blog_Post %}
+            <h3>{{ 'admin.ch.cat'|trans }}</h3>
+{% endblock %}

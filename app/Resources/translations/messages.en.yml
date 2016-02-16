@@ -14,3 +14,9 @@ menu:
 main:
     Head: Symfony blog
     Descr: Simple blog with Bootstrap.
+    about: About
+    popular: popular Posts
+    lastComm: Last 5 comments
+admin:
+    panel: admin panel
+    ch.cat: Choose category in above menu

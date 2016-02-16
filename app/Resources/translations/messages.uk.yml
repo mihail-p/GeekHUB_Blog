@@ -1,7 +1,7 @@
 menu:
     home: Додому
     admin: Адміністрування
-    posts: Пости
+    posts: Статті
     login: Ввійти
     regist: Реєстрація
     logout: Вийти
@@ -9,8 +9,14 @@ menu:
     userL: Перелік авторів
     newT: Новий ярлик
     tags: Ярлики
-    newP: Новий пост
-    admP: Адмін Пости
+    newP: Нова стаття
+    admP: Редаг. статтю
 main:
     Head: Symfony блог
     Descr: Простий блог з Bootstrap.
+    about: Про сайт
+    popular: популярних статей
+    lastComm: Останні 5 коментарів
+admin:
+    panel: адміністративна панель
+    ch.cat: Виберіть необхідну категорію зверху в меню
