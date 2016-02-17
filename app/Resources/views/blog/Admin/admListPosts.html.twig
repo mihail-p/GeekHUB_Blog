@@ -29,15 +29,17 @@
                             {% endif %}
                         {% endfor %}
                     </td>
-                    <td>
-                        <a class="glyphicon glyphicon-pencil" title="edit Post"
-                           href="{{ path('admPostMod', {'id':post.id}) }}"></a>
-                    </td>
-                    <td>
-                        {{ form_start(delForms[post.id], {attr : {onsubmit: 'return confirm("Do you really want to delete?");' }}) }}
-                        {{ form_widget(delForms[post.id].submit) }}
-                        {{ form_end(delForms[post.id]) }}
-                    </td>
+                    {% if is_granted('edit', post) or is_granted('ROLE_ADMIN') %}
+                        <td>
+                            <a class="glyphicon glyphicon-pencil" title="edit Post"
+                               href="{{ path('admPostMod', {'id':post.id}) }}"></a>
+                        </td>
+                        <td>
+                            {{ form_start(delForms[post.id], {attr : {onsubmit: 'return confirm("Do you really want to delete?");' }}) }}
+                            {{ form_widget(delForms[post.id].submit) }}
+                            {{ form_end(delForms[post.id]) }}
+                        </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </table>

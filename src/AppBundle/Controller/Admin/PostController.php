@@ -90,6 +90,10 @@ class PostController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $postObj = $em->getRepository('AppBundle:Post')->find($id);
+        if (!($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') or
+            $this->get('security.authorization_checker')->isGranted('edit', $postObj))) {
+            throw $this->createAccessDeniedException();
+        }
         $form = $this->createForm(PostAddType::class, $postObj);
         $form->add('modify', SubmitType::class);
         $msg = 'Edit post';
