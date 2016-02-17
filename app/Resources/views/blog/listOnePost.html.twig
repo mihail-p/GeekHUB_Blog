@@ -48,7 +48,7 @@
                     <p>
                         <span class="blog-description">date: </span>
                         <span>{{ item.dateTime | date }}</span>
-                        {% if is_granted('edit', item) %}
+                        {% if is_granted('edit', item) or is_granted('ROLE_ADMIN') or is_granted('edit', post) %}
                                 <a class="glyphicon glyphicon-pencil" title="edit comment"
                                    href="{{ path('commentEdit', {'id':item.id}) }}"></a>
                         {% endif %}
