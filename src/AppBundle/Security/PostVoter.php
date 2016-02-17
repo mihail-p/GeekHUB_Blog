@@ -25,7 +25,7 @@ class PostVoter extends Voter
             return false;
         }
         // only vote on Post objects inside this voter
-        if (!$subject instanceof Comment) {
+        if (!$subject instanceof Post) {
             return false;
         }
         return true;

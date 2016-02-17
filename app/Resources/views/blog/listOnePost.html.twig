@@ -40,7 +40,6 @@
             <h3 class="media-heading">Comments:</h3>
             <span class="glyphicon glyphicon-comment"></span><br>
             {% for item in post.comments %}
-
                 <div class="media-left">
                     <span class="blog-description">score:</span> {{ item.score }},
                     <span class="blog-description">author: </span> {{ item.author.username }}
@@ -53,7 +52,6 @@
                                 <a class="glyphicon glyphicon-pencil" title="edit comment"
                                    href="{{ path('commentEdit', {'id':item.id}) }}"></a>
                         {% endif %}
-
                     </p>
                 </div>
                 <div class="alert alert-info">

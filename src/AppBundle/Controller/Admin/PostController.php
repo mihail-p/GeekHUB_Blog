@@ -35,6 +35,7 @@ class PostController extends Controller
         $post = new Post();
         $post->setTitle('Title name');
         $post->setDateTime(new \DateTime());
+        $post->setAuthor($this->getUser());
         $post->setTotalScore(0);
 
         $form = $this->createForm(PostAddType::class, $post);

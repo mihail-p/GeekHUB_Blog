@@ -6,37 +6,49 @@
 {% endblock %}
 
 {% block nav %}
-    <a class="blog-nav-item {{ 'index' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('indexBlog') }}">
-        {% trans %}menu.home{% endtrans %}
-    </a>
-    <a class="blog-nav-item {{ 'adminB' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('adminBlog') }}">
-        {% trans %}menu.admin{% endtrans %}
-    </a>
-    {# is_granted('ROLE_MODERATOR') #}
-    {% if is_granted('ROLE_ADMIN') %}
-        <a class="blog-nav-item {{ 'authorA' in app.request.get('_route') ? 'active' : '' }}"
-           href="{{ path('user_registration') }}">{% trans %}menu.userA{% endtrans %}</a>
-        <a class="blog-nav-item {{ 'authorL' in app.request.get('_route') ? 'active' : '' }}"
-           href="{{ path('authorList') }}">{{ 'menu.userL'|trans }}</a>
-        <a class="blog-nav-item {{ 'tagA' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('tagAdd') }}">
-            {{ 'menu.newT'|trans }}
+    <div class="navbar-left">
+        <a class="blog-nav-item {{ 'index' in app.request.get('_route') ? 'active' : '' }}"
+           href="{{ path('indexBlog') }}">
+            {% trans %}menu.home{% endtrans %}
         </a>
-        <a class="blog-nav-item {{ 'tagL' in app.request.get('_route') ? 'active' : '' }}"
-           href="{{ path('tagList') }}">{{ 'menu.tags'|trans }}</a>
-    {% endif %}
-    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_MODERATOR') %}
-        <a class="blog-nav-item {{ 'postA' in app.request.get('_route') ? 'active' : '' }}"
-           href="{{ path('postAdd') }}">
-            {{ 'menu.newP'|trans }}
+        <a class="blog-nav-item {{ 'adminB' in app.request.get('_route') ? 'active' : '' }}"
+           href="{{ path('adminBlog') }}">
+            {% trans %}menu.admin{% endtrans %}
         </a>
-        <a class="blog-nav-item {{ 'admP' in app.request.get('_route') ? 'active' : '' }}"
-           href="{{ path('admPostList') }}">
-            {{ 'menu.listAdmP'|trans }}
+        {% if is_granted('ROLE_ADMIN') %}
+            <a class="blog-nav-item {{ 'authorA' in app.request.get('_route') ? 'active' : '' }}"
+               href="{{ path('user_registration') }}">{% trans %}menu.userA{% endtrans %}</a>
+            <a class="blog-nav-item {{ 'authorL' in app.request.get('_route') ? 'active' : '' }}"
+               href="{{ path('authorList') }}">{{ 'menu.userL'|trans }}</a>
+            <a class="blog-nav-item {{ 'tagA' in app.request.get('_route') ? 'active' : '' }}"
+               href="{{ path('tagAdd') }}">
+                {{ 'menu.newT'|trans }}
+            </a>
+            <a class="blog-nav-item {{ 'tagL' in app.request.get('_route') ? 'active' : '' }}"
+               href="{{ path('tagList') }}">{{ 'menu.tags'|trans }}</a>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_MODERATOR') %}
+            <a class="blog-nav-item {{ 'postA' in app.request.get('_route') ? 'active' : '' }}"
+               href="{{ path('postAdd') }}">
+                {{ 'menu.newP'|trans }}
+            </a>
+            <a class="blog-nav-item {{ 'admP' in app.request.get('_route') ? 'active' : '' }}"
+               href="{{ path('admPostList') }}">
+                {{ 'menu.listAdmP'|trans }}
+            </a>
+        {% endif %}
+    </div>
+    <div class="navbar-right">
+        <a class="blog-nav-item {{ 'Logout' in app.request.get('_route') ? 'active' : '' }}"
+           href="{{ path('logout') }}">
+            {{ 'menu.logout'|trans }}
         </a>
-    {% endif %}
-    <a class="blog-nav-item {{ 'Logout' in app.request.get('_route') ? 'active' : '' }}" href="{{ path('logout') }}">
-        {{ 'menu.logout'|trans }}
-    </a>
+        <span class="blog-nav-item">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            ({{ app.user.username }})
+        {% endif %}
+        </span>
+    </div>
 {% endblock nav %}
 {% block blog_Post %}
     <h3>{{ 'admin.ch.cat'|trans }}</h3>
