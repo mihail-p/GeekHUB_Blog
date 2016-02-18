@@ -61,7 +61,6 @@ class CommentVoter extends Voter
         // to get the entity of the user who owns this data object
 
         return ($user === $comment->getAuthor()
-            or $user === $comment->getPost()->getAuthor()
         );
     }
 }

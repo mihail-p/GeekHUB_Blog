@@ -20,3 +20,5 @@ main:
 admin:
     panel: admin panel
     ch.cat: Choose category in above menu
+index:
+    sampleTitle: Sample blog post
