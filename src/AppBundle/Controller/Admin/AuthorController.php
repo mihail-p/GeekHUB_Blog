@@ -9,6 +9,8 @@
 namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Author;
+use AppBundle\Form\AuthorType;
+use AppBundle\Form\UserRoleType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -47,8 +49,9 @@ class AuthorController extends Controller
             'error' => $error,
         ]);
     }
+
     /**
-     * @Route("/{_locale}/admin/authorList", name="authorList", defaults={"_locale": "en"}, requirements={
+     * @Route("/{_locale}/admin/user/list", name="authorList", defaults={"_locale": "en"}, requirements={
      *     "_locale": "%locales%"})
      */
     public function listAction()
@@ -62,5 +65,27 @@ class AuthorController extends Controller
             ->getAllAuthors();
 
         return $this->render(':blog/Admin:listAuthor.html.twig', ['listObj' => $listObj]);
+    }
+
+    /**
+     * @Route("/{_locale}/admin/user/role/{user}", name="editUserRole")
+     */
+    public function editAction($user, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $userObj = $em->getRepository('AppBundle:Author')->findOneBy(['username' => $user]);
+        $userObj->setPlainPassword('1');
+
+        $form = $this->createForm(UserRoleType::class, $userObj)
+            ->add('Update', SubmitType::class);
+        $form->handleRequest($request);
+
+        if ($form->isValid()){
+            $em->flush();
+
+            return $this->redirectToRoute('authorList');
+        }
+
+        return $this->render(':blog/Admin:editUser.html.twig', ['form' => $form->createView()]);
     }
 }

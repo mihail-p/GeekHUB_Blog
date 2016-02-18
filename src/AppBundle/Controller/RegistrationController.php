@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Form\AuthorType;
 use AppBundle\Entity\Author;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class RegistrationController extends Controller
@@ -19,7 +20,8 @@ class RegistrationController extends Controller
         $user = new Author();
         $user->setRole('ROLE_USER');
         $user->setDateTime(new \DateTime());
-        $form = $this->createForm(AuthorType::class, $user);
+        $form = $this->createForm(AuthorType::class, $user)
+            ->add('Register!', SubmitType::class);
 
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);

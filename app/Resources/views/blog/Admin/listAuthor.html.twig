@@ -19,7 +19,11 @@
                     <td>{{ author.username }}</td>
                     <td>{{ author.password }}</td>
                     <td>{{ author.role }}</td>
-                    <td>{{ author.dateTime|date }}</td>
+                    <td>{{ author.dateTime|date }}
+                        <a class="glyphicon glyphicon-pencil" title="edit Author"
+                           href="{{ path('editUserRole', {'user':author.username}) }}"></a>
+                    </td>
+
                 </tr>
             {% endfor %}
         </table>

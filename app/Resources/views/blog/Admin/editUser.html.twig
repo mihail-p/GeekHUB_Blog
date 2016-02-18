@@ -1,0 +1,9 @@
+{% extends 'blog.base.html.twig' %}
+{% block blog_Post %}
+    <h3><b>Edit</b></h3>
+    <h4>Edit user role:</h4>
+    {{ form_start(form) }}
+    {{ form_row(form.username) }}
+    {{ form_row(form.role) }}
+    {{ form_end(form) }}
+{% endblock %}
