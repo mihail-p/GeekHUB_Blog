@@ -84,6 +84,11 @@ class Post
     private $comments;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\FileUpload", mappedBy="post")
+     */
+    private $uploadFile;
+
+    /**
      * Get id
      *
      * @return int
@@ -304,5 +309,39 @@ class Post
     public function getComments()
     {
         return $this->comments;
+    }
+
+    /**
+     * Add uploadFile
+     *
+     * @param \AppBundle\Entity\FileUpload $uploadFile
+     *
+     * @return Post
+     */
+    public function addUploadFile(\AppBundle\Entity\FileUpload $uploadFile)
+    {
+        $this->uploadFile[] = $uploadFile;
+
+        return $this;
+    }
+
+    /**
+     * Remove uploadFile
+     *
+     * @param \AppBundle\Entity\FileUpload $uploadFile
+     */
+    public function removeUploadFile(\AppBundle\Entity\FileUpload $uploadFile)
+    {
+        $this->uploadFile->removeElement($uploadFile);
+    }
+
+    /**
+     * Get uploadFile
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUploadFile()
+    {
+        return $this->uploadFile;
     }
 }

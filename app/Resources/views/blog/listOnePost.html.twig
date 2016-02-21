@@ -26,9 +26,17 @@
                 </a>
             {% endfor %}
         {% endif %}
-        {#{% set runtimeConfig = {"thumbnail": {"size": [160, 110] }} %}#}
+        {#{% set runtimeConfig = {"thumbnail": {"size": [160, 110] }} %}
+        http://lorempixel.com/400/200
+        #}
         <div>
-            <img class=" img-thumbnail" src="{{ asset('img/programming.jpg') | imagine_filter('thumb_300') }}"/>
+            {% if post.uploadFile.values[0] is defined %}
+                <img class=" img-thumbnail"
+                     src="{{ asset(post.uploadFile.values[0].path) | imagine_filter('thumb_300') }}"/>
+            {% else %}
+                <img class=" img-thumbnail" src="{{ asset('img/programming.jpg') | imagine_filter('thumb_300') }}"/>
+            {% endif %}
+            {#{{ dump(post.uploadFile) }}#}
             <p>{{ big_char(post.post) | nl2br }}</p>
             <p class="clear clearfix"></p>
             <hr>
@@ -50,8 +58,8 @@
                         <span>{{ item.dateTime | date }}</span>
                         {% if is_granted('edit', item) or is_granted('ROLE_ADMIN') or
                         (is_granted('edit', post) and (item.author.role != 'ROLE_ADMIN')) %}
-                                <a class="glyphicon glyphicon-pencil" title="edit comment"
-                                   href="{{ path('commentEdit', {'id':item.id}) }}"></a>
+                            <a class="glyphicon glyphicon-pencil" title="edit comment"
+                               href="{{ path('commentEdit', {'id':item.id}) }}"></a>
                         {% endif %}
                     </p>
                 </div>
@@ -62,16 +70,16 @@
         </div>
     </div>
     <div class="media">
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <div class="media-body">
-        user: "{{ app.user.username }}"
-            <h4>Your score and comment:</h4>
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            {{ form_end(form) }}
-        </div>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div class="media-body">
+                user: "{{ app.user.username }}"
+                <h4>Your score and comment:</h4>
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
         {% else %}
-        <p>Your are not correct login and can't post comments!</p>
+            <p>Your are not correct login and can't post comments!</p>
         {% endif %}
     </div>
     {#--- end Comments ---#}

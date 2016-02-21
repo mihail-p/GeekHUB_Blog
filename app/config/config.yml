@@ -65,6 +65,12 @@ stof_doctrine_extensions:
     orm:
         default:
             sluggable: true
+            uploadable: true
+
+    uploadable:
+        # Default file path: This is one of the three ways you can configure the path for the Uploadable extension
+        default_file_path:       %kernel.root_dir%/../web/media
+        # mime_type_guesser_class: Stof\DoctrineExtensionsBundle\Uploadable\MimeTypeGuesserAdapter
 
 # Liip Imagine Bundle
 liip_imagine:

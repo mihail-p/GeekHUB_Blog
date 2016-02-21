@@ -14,6 +14,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use AppBundle\Entity\Author;
+use Symfony\Component\Form\Exception\RuntimeException;
 
 class CreateAdminCommand extends ContainerAwareCommand
 {
@@ -48,6 +49,8 @@ class CreateAdminCommand extends ContainerAwareCommand
         }
         $name = $input->getArgument('name');
         $plainPassword = $input->getArgument('password');
+        if ($plainPassword == "") {
+            throw new \RuntimeException('Password must not be blank!'); }
         $userExists = $em->getRepository('AppBundle:Author')
             ->findOneBy(array('username' => $name));
         if ($userExists) {

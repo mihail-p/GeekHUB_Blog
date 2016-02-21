@@ -8,11 +8,13 @@
 
 namespace AppBundle\Controller\Admin;
 
+use AppBundle\Entity\FileUpload;
 use AppBundle\Entity\Post;
 use AppBundle\Form\PostAddType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,7 +22,6 @@ use Symfony\Component\HttpFoundation\Request;
  * Class PostController
  * @Route("/{_locale}/admin/post")
  */
-
 class PostController extends Controller
 {
     /**
@@ -29,7 +30,8 @@ class PostController extends Controller
     public function addAction(Request $request)
     {
         if (!($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') or
-            $this->get('security.authorization_checker')->isGranted('ROLE_MODERATOR'))) {
+            $this->get('security.authorization_checker')->isGranted('ROLE_MODERATOR'))
+        ) {
             throw $this->createAccessDeniedException();
         }
         $post = new Post();
@@ -63,7 +65,8 @@ class PostController extends Controller
     public function listAction()
     {
         if (!($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') or
-            $this->get('security.authorization_checker')->isGranted('ROLE_MODERATOR'))) {
+            $this->get('security.authorization_checker')->isGranted('ROLE_MODERATOR'))
+        ) {
             throw $this->createAccessDeniedException();
         }
         $em = $this->getDoctrine()->getManager();
@@ -83,33 +86,67 @@ class PostController extends Controller
     }
 
     /**
-     *@Route("/mod/{id}", name="admPostMod",
+     * @Route("/mod/{id}", name="admPostMod",
      *     requirements={"id": "\d+"})
      */
     public function modAction($id, Request $request)
     {
+        $pict = new FileUpload();
         $em = $this->getDoctrine()->getManager();
         $postObj = $em->getRepository('AppBundle:Post')->find($id);
         if (!($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') or
-            $this->get('security.authorization_checker')->isGranted('edit', $postObj))) {
+            $this->get('security.authorization_checker')->isGranted('edit', $postObj))
+        ) {
             throw $this->createAccessDeniedException();
         }
         $form = $this->createForm(PostAddType::class, $postObj);
         $form->add('modify', SubmitType::class);
+
+        $formUpload = $this->createFormBuilder($pict)
+            ->add('file', FileType::class)
+            ->add('Upload', SubmitType::class)
+            ->getForm();
         $msg = 'Edit post';
 
-        if ($request->getMethod() == 'POST') {
+        if ($request->getMethod() === 'POST') {
             $form->handleRequest($request);
+            $formUpload->handleRequest($request);
 
             if ($form->isValid()) {
-                $em->flush();
-                $msg = 'post was modified';
 
-                return $this->redirectToRoute('admPostList', ['msg' => $msg]);
+                $em->flush();
+                $msg = 'post "' . $postObj->getTitle() . '" was modified';
+
+                /*return $this->redirectToRoute('admPostList', ['msg' => $msg]); */
+            }
+            if ($formUpload->isValid()) {
+                /*$uploads = $formUpload['file']->getData();*/
+                $pict->setPost($postObj);
+                $upFiles = $em->getRepository('AppBundle:FileUpload')->findAll();
+                foreach ($upFiles as $item) {
+                    $uplPost = $item->getPost();
+                    if ($uplPost == null) {
+                        continue;
+                    }
+                    $upId = $uplPost->getId();
+                    if ($upId == $id) {
+                        $em->remove($item);
+                    }
+                }
+                /*$uploads->move('./media/', $uploads->getClientOriginalName());*/
+                $em->persist($pict);
+                $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
+                $uploadableManager->markEntityToUpload($pict, $pict->getFile());
+
+                $em->flush();
+                $msg = 'post "' . $postObj->getTitle() . '" was modified';
+
+                /*return $this->redirectToRoute('admPostList', ['msg' => $msg]); */
             }
         }
         return $this->render(':blog/Admin:addItem.html.twig',
-            ['form' => $form->createView(),'msg' => $msg]);
+            ['form' => $form->createView(), 'msg' => $msg,
+                'formUpload' => $formUpload->createView()]);
     }
 
     /**
@@ -120,10 +157,10 @@ class PostController extends Controller
      */
     public function delAction($id)
     {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AppBundle:Post')->find($id);
-            $em->remove($entity);
-            $em->flush();
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('AppBundle:Post')->find($id);
+        $em->remove($entity);
+        $em->flush();
 
         return $this->redirectToRoute('admPostList');
     }

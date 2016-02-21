@@ -2,6 +2,8 @@
 
 namespace AppBundle\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -26,7 +28,10 @@ class PostAddType extends AbstractType
               'choice_label' => 'tag ',
               'multiple' => 'true',
               'expanded' => 'true'
-            ]);
+            ])
+            /*->add('uploadFile', CollectionType::class, [
+                'entry_type' => FileType::class]);*/
+        ;
     }
     public function configureOptions(OptionsResolver $resolver)
     {
