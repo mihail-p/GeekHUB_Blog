@@ -34,6 +34,12 @@ class FileUpload
     private $name;
 
     /**
+     * @ORM\Column(type="string")
+     * @Assert\Length(max="255")
+     */
+    private $origName;
+
+    /**
      * @ORM\Column
      * @Gedmo\UploadableFileMimeType
      */
@@ -67,7 +73,14 @@ class FileUpload
 
     public function myCallbackMethod(array $info)
     {
-        // Do some stuff with the file..
+        if (!$this->getPost()){
+            $this->setOrigName('Post is NULL');
+        }else{
+            /*$this->setOrigName($this->getPost()->getId());*/
+        }
+         $this->getPost()->setPictPath('Callback Method');
+
+        return $this;
     }
 
     /**
@@ -127,6 +140,24 @@ class FileUpload
     {
         return $this->name;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getOrigName()
+    {
+        return $this->origName;
+    }
+
+    /**
+     * @param mixed $origName
+     */
+    public function setOrigName($origName)
+    {
+        $this->origName = $origName;
+    }
+
+
 
     /**
      * Set mimeType

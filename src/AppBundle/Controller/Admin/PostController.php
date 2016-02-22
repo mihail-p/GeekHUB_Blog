@@ -102,11 +102,13 @@ class PostController extends Controller
         $form = $this->createForm(PostAddType::class, $postObj);
         $form->add('modify', SubmitType::class);
 
+        /*$pict->setPost($postObj);*/
         $formUpload = $this->createFormBuilder($pict)
             ->add('file', FileType::class)
             ->add('Upload', SubmitType::class)
             ->getForm();
         $msg = 'Edit post';
+        $uploads = 0; $var1 = 0; $var2 = 0;
 
         if ($request->getMethod() === 'POST') {
             $form->handleRequest($request);
@@ -120,8 +122,15 @@ class PostController extends Controller
                 /*return $this->redirectToRoute('admPostList', ['msg' => $msg]); */
             }
             if ($formUpload->isValid()) {
-                /*$uploads = $formUpload['file']->getData();*/
+
+                $uploads = $formUpload['file']->getData();
+                /*$uploads = $pict;*/
+                $var1 = $pict->getPath();
+                /*$postObj->setPictPath('Controller');*/
                 $pict->setPost($postObj);
+                $pict->setOrigName($uploads->getClientOriginalName());
+                /*$pict->setOrigName($pict->getPath());*/
+
                 $upFiles = $em->getRepository('AppBundle:FileUpload')->findAll();
                 foreach ($upFiles as $item) {
                     $uplPost = $item->getPost();
@@ -137,15 +146,20 @@ class PostController extends Controller
                 $em->persist($pict);
                 $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
                 $uploadableManager->markEntityToUpload($pict, $pict->getFile());
-
+                $postObj->setPictPath('Controller 222');
+                /*$var2 = $pict->getPath();*/
+                /*$var2 = $postObj->getPictPath();*/
+                $var2 = $em;
                 $em->flush();
+
+
                 $msg = 'post "' . $postObj->getTitle() . '" was modified';
 
                 /*return $this->redirectToRoute('admPostList', ['msg' => $msg]); */
             }
         }
         return $this->render(':blog/Admin:addItem.html.twig',
-            ['form' => $form->createView(), 'msg' => $msg,
+            ['form' => $form->createView(), 'msg' => $msg, 'uploads' => $uploads, 'var1' =>$var1, 'var2' =>$var2,
                 'formUpload' => $formUpload->createView()]);
     }
 

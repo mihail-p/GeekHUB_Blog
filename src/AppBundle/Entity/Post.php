@@ -72,6 +72,11 @@ class Post
     private $post;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    private $pict_path;
+
+    /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Tag", inversedBy="posts")
      */
     private $tags;
@@ -184,6 +189,22 @@ class Post
     public function getPost()
     {
         return $this->post;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPictPath()
+    {
+        return $this->pict_path;
+    }
+
+    /**
+     * @param mixed $pict_path
+     */
+    public function setPictPath($pict_path)
+    {
+        $this->pict_path = $pict_path;
     }
 
     /**
