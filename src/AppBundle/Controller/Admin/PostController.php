@@ -158,7 +158,7 @@ class PostController extends Controller
                 /*return $this->redirectToRoute('admPostList', ['msg' => $msg]); */
             }
         }
-        return $this->render(':blog/Admin:addItem.html.twig',
+        return $this->render(':blog/Admin:editItem.html.twig',
             ['form' => $form->createView(), 'msg' => $msg, 'uploads' => $uploads, 'var1' =>$var1, 'var2' =>$var2,
                 'formUpload' => $formUpload->createView()]);
     }
