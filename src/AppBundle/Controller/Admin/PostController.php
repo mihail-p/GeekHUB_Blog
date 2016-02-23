@@ -146,10 +146,16 @@ class PostController extends Controller
                 $em->persist($pict);
                 $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
                 $uploadableManager->markEntityToUpload($pict, $pict->getFile());
-                $postObj->setPictPath('Controller 222');
+
                 /*$var2 = $pict->getPath();*/
                 /*$var2 = $postObj->getPictPath();*/
-                $var2 = $em;
+
+                $var2 = $em->getUnitOfWork()->getScheduledEntityInsertions();
+                foreach ($var2 as $item) {
+                    $var1 = get_object_vars($item);
+                    $postObj->setPictPath($item->getid());
+                }
+
                 $em->flush();
 
 
