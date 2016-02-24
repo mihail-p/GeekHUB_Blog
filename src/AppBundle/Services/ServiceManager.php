@@ -2,10 +2,19 @@
 
 namespace AppBundle\Services;
 
+use Doctrine\ORM\EntityManager;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+
 
 class ServiceManager
 {
     private $eny;
+    protected $doctrine;
+
+    public function __construct(RegistryInterface $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
 
     /**
      * @param $value
@@ -102,5 +111,15 @@ class ServiceManager
         $totalScore = round($sumScore / $ammComments);
         $post->setTotalScore($totalScore);
         /* end total comments */
+    }
+
+    public function userExist($user)
+    {
+        $em = $this->doctrine->getManager();
+        $userExists = $em->getRepository('AppBundle:Author')
+            ->findOneBy(array('username' => $user));
+        if ($userExists) {
+            throw new \RuntimeException('User already exists: '.$user);
+        }
     }
 }

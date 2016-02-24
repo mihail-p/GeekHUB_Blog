@@ -39,6 +39,7 @@ class PostController extends Controller
         $post->setDateTime(new \DateTime());
         $post->setAuthor($this->getUser());
         $post->setTotalScore(0);
+        $post->setPictPath('not set');
 
         $form = $this->createForm(PostAddType::class, $post);
         $form->add('add post', SubmitType::class);

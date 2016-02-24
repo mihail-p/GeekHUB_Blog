@@ -33,6 +33,7 @@ class RegistrationController extends Controller
 
             // 4) save the User!
             $em = $this->getDoctrine()->getManager();
+            $this->get('app.manager')->userExist($form->getData(Author::class, 'username'));
             $em->persist($user);
             $em->flush();
 
