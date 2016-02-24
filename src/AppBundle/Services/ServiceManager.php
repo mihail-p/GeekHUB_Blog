@@ -119,7 +119,7 @@ class ServiceManager
         $userExists = $em->getRepository('AppBundle:Author')
             ->findOneBy(array('username' => $user));
         if ($userExists) {
-            throw new \RuntimeException('User already exists: '.$user);
+            throw new \RuntimeException('User already exists: "'.$user.'". Please choose another name');
         }
     }
 }

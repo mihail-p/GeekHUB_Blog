@@ -33,14 +33,12 @@ class RegistrationController extends Controller
 
             // 4) save the User!
             $em = $this->getDoctrine()->getManager();
-            $this->get('app.manager')->userExist($form->getData(Author::class, 'username'));
+            $userName = $form->getData(Author::class)->getUsername();
+            $this->get('app.manager')->userExist($userName);
             $em->persist($user);
             $em->flush();
 
-            // ... do any other work - like send them an email, etc
-            // maybe set a "flash" success message for the user
-
-            return $this->render(':blog/Admin:registerOk.html.twig');
+            return $this->render(':blog/Admin:registerOk.html.twig', ['userName' => $userName]);
         }
 
         return $this->render(

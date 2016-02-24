@@ -6,13 +6,12 @@
     
     <parameters>
         <parameter key="textSent">Sentence in XML</parameter>
-        <parameter key="doctrine">doctrine</parameter>
     </parameters>
     
     <services>
         <service id="app.manager" class="AppBundle\Services\ServiceManager">
+            <argument key="doctrine" type="service" id="doctrine"/>
             <call method="setEny">
-                <argument>%doctrine%</argument>
                 <argument>%textsent%</argument>
             </call>
         </service>
