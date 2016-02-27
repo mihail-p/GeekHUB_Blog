@@ -11,9 +11,12 @@ namespace AppBundle\Controller\Admin;
 use AppBundle\Entity\FileUpload;
 use AppBundle\Entity\Post;
 use AppBundle\Form\PostAddType;
+use Doctrine\ORM\EntityRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -109,11 +112,26 @@ class PostController extends Controller
             ->add('Upload', SubmitType::class)
             ->getForm();
         $msg = 'Edit post';
-        $uploads = 0; $var1 = 0; $var2 = 0;
+        $uploads = 0;
+        $var1 = 0;
+        $var2 = 0;
+
+        $chooseObjs = $em->getRepository('AppBundle:FileUpload')->getListUploads(10);
+
+        $var2 = $chooseObjs;
+        $formChoose = $this->createFormBuilder($postObj)
+            ->add('pict_path', ChoiceType::class, [
+                'choices' => $chooseObjs,
+                'choices_as_values' => true,
+                'choice_label' => 'origName'
+            ])
+            ->add('Choose', SubmitType::class)
+            ->getForm();
 
         if ($request->getMethod() === 'POST') {
             $form->handleRequest($request);
             $formUpload->handleRequest($request);
+            $formChoose->handleRequest($request);
 
             if ($form->isValid()) {
 
@@ -122,27 +140,35 @@ class PostController extends Controller
 
                 /*return $this->redirectToRoute('admPostList', ['msg' => $msg]); */
             }
+
+            if($formChoose->isValid()){
+                $var1 = $formChoose->getData();
+
+                $postObj->setPictPath($postObj->getPictPath()->getPath());
+                $em->flush();
+
+                $msg = 'post CHOOSE "' . $postObj->getTitle() . '" was modified';
+            }
+
             if ($formUpload->isValid()) {
 
                 $uploads = $formUpload['file']->getData();
-                /*$uploads = $pict;*/
-                $var1 = $pict->getPath();
-                /*$postObj->setPictPath('Controller');*/
+                /*$var1 = $pict->getPath();*/
                 $pict->setPost($postObj);
                 $pict->setOrigName($uploads->getClientOriginalName());
                 /*$pict->setOrigName($pict->getPath());*/
 
-                $upFiles = $em->getRepository('AppBundle:FileUpload')->findAll();
-                foreach ($upFiles as $item) {
-                    $uplPost = $item->getPost();
-                    if ($uplPost == null) {
-                        continue;
-                    }
-                    $upId = $uplPost->getId();
-                    if ($upId == $id) {
-                        $em->remove($item);
-                    }
-                }
+                /*   $upFiles = $em->getRepository('AppBundle:FileUpload')->findAll();
+                   foreach ($upFiles as $item) {
+                       $uplPost = $item->getPost();
+                       if ($uplPost == null) {
+                           continue;
+                       }
+                       $upId = $uplPost->getId();
+                       if ($upId == $id) {
+                           $em->remove($item);
+                       }
+                   }*/
                 /*$uploads->move('./media/', $uploads->getClientOriginalName());*/
                 $em->persist($pict);
                 $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
@@ -151,11 +177,11 @@ class PostController extends Controller
                 /*$var2 = $pict->getPath();*/
                 /*$var2 = $postObj->getPictPath();*/
 
-                $var2 = $em->getUnitOfWork()->getScheduledEntityInsertions();
-                foreach ($var2 as $item) {
+                /*$var2 = $em->getUnitOfWork()->getScheduledEntityInsertions();*/
+                /*foreach ($var2 as $item) {
                     $var1 = get_object_vars($item);
                     $postObj->setPictPath($item->getid());
-                }
+                }*/
 
                 $em->flush();
 
@@ -166,8 +192,8 @@ class PostController extends Controller
             }
         }
         return $this->render(':blog/Admin:editItem.html.twig',
-            ['form' => $form->createView(), 'msg' => $msg, 'uploads' => $uploads, 'var1' =>$var1, 'var2' =>$var2,
-                'formUpload' => $formUpload->createView()]);
+            ['form' => $form->createView(), 'msg' => $msg, 'uploads' => $uploads, 'var1' => $var1, 'var2' => $var2,
+                'formUpload' => $formUpload->createView(), 'formChoose' => $formChoose->createView()]);
     }
 
     /**

@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\FileUploadRepository")
  * @Gedmo\Uploadable(path="./media", callback="myCallbackMethod", filenameGenerator="SHA1", appendNumber=true, allowedTypes="image/png,image/jpeg,image/jpg,image/gif,image/x-ms-bmp")
  */
 
@@ -73,12 +73,7 @@ class FileUpload
 
     public function myCallbackMethod(array $info)
     {
-        if (!$this->getPost()){
-            $this->setOrigName('Post is NULL');
-        }else{
-            /*$this->setOrigName($this->getPost()->getId());*/
-        }
-         $this->getPost()->setPictPath('Callback Method');
+            /*$this->setOrigName($info['fileName']);*/
 
         return $this;
     }

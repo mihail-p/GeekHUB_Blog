@@ -30,13 +30,14 @@
         http://lorempixel.com/400/200
         #}
         <div>
-            {% if post.uploadFile.values[0] is defined %}
+            {#{% if post.uploadFile.values[0] is defined %}#}
+            {% if post.pictPath != "" %}
                 <img class=" img-thumbnail"
-                     src="{{ asset(post.uploadFile.values[0].path) | imagine_filter('thumb_300') }}"/>
+                     src="{{ asset(post.pictPath) | imagine_filter('thumb_300') }}"/>
             {% else %}
                 <img class=" img-thumbnail" src="{{ asset('img/programming.jpg') | imagine_filter('thumb_300') }}"/>
             {% endif %}
-            {{ dump(post.uploadFile) }}
+            {#{{ dump(post.uploadFile) }}#}
             <p>{{ big_char(post.post) | nl2br }}</p>
             <p class="clear clearfix"></p>
             <hr>

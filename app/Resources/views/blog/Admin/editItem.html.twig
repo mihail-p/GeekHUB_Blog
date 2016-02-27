@@ -8,10 +8,16 @@
     <hr>
     <h3>Add post picture:</h3>
     {{ form(formUpload) }}
-
+    <h3>Choose title picture:</h3>
+    {{ form(formChoose) }}
+    {{ dump(formChoose) }}
+    uploads:
     {{ dump(uploads) }}
+    var1:
     {{ dump(var1) }}
-    {% for item in var2 %}
+    var2:
+    {{ dump(var2) }}
+    {#{% for item in var2 %}
     {{ dump(item) }}
-        {% endfor %}
+        {% endfor %}#}
 {% endblock %}

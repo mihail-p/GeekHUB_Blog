@@ -33,7 +33,12 @@
                     </a>
                 {% endfor %}
             {% endif %}
-            <img class=" img-thumbnail" src="{{ asset('img/programming.jpg') | imagine_filter('thumb_160') }}"/>
+            {% if post.pictPath != "" %}
+                <img class=" img-thumbnail" src="{{ asset(post.pictPath) | imagine_filter('thumb_160') }}"/>
+            {% else %}
+                {{ dump(post.pictPath) }}
+                <img class=" img-thumbnail" src="{{ asset('img/programming.jpg') | imagine_filter('thumb_160') }}"/>
+            {% endif %}
             <div class="clearfix">
                 {{ post.post | nl2br }}
                 {% if post.post|length >299 %}...
