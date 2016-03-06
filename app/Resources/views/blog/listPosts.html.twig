@@ -33,7 +33,7 @@
                     </a>
                 {% endfor %}
             {% endif %}
-            {% if post.pictPath != "" %}
+            {% if post.pictPath != '' and post.pictPath != 'not set' %}
                 <img class=" img-thumbnail" src="{{ asset(post.pictPath) | imagine_filter('thumb_160') }}"/>
             {% else %}
                 {{ dump(post.pictPath) }}

@@ -123,7 +123,7 @@ class PostController extends Controller
             ->add('pict_path', ChoiceType::class, [
                 'choices' => $chooseObjs,
                 'choices_as_values' => true,
-                'choice_label' => 'origName'
+                'choice_label' => 'origNameSize'
             ])
             ->add('Choose', SubmitType::class)
             ->getForm();

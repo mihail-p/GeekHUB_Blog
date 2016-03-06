@@ -152,7 +152,17 @@ class FileUpload
         $this->origName = $origName;
     }
 
-
+    /**
+     * @return mixed
+     */
+    public function getOrigNameSize()
+    {
+        $tmpName = $this->origName;
+        if ($this->origName == ''){
+            $tmpName='empty';
+        }
+        return $tmpName.' ('.$this->size.')';
+    }
 
     /**
      * Set mimeType
